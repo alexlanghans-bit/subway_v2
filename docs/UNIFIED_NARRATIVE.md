@@ -224,6 +224,52 @@ The Subway transformation requires redefining three relationships:
 
 ---
 
+## Community as Infrastructure
+
+**The comeback needs more than software — it needs people.**
+
+### Existing Community Assets
+
+| Community | Scope | Role |
+|-----------|-------|------|
+| **WhatsApp Coalition** | ~60 franchisees, 1,000-1,500 stores | Grassroots organizing, pilot recruitment, real-time feedback |
+| **NAASF** | National association (longstanding) | Formal franchisee voice, policy advocacy |
+
+### The WhatsApp Coalition
+
+A growing community of franchisees representing **5-7% of all US Subway stores**. This is:
+- **Proof of demand** — Franchisees want change and are organizing
+- **Pilot pool** — Ready group to test new initiatives (Devapp1, Check-In, etc.)
+- **Feedback channel** — Real-time input from operators in the field
+- **Trust network** — Peer relationships that corporate can't manufacture
+
+### NAASF (North American Association of Subway Franchisees)
+
+An established franchisee association with:
+- **History** — Long track record of franchisee advocacy
+- **Credibility** — Recognized voice for operators
+- **Challenge** — Historically strained relationship with franchisor
+
+**The opportunity:** If the Comeback can align NAASF and corporate around shared goals, it transforms an adversarial relationship into a partnership. The new social contract (see above) provides the framework.
+
+### Why Community Matters
+
+| Without Community | With Community |
+|-------------------|----------------|
+| Top-down mandates | Bottom-up buy-in |
+| Resistance to change | Champions for change |
+| Slow adoption | Rapid pilot recruitment |
+| Corporate echo chamber | Real operator feedback |
+| "Us vs. them" | "We're in this together" |
+
+**Community is not a nice-to-have. It's infrastructure for change.**
+
+The WhatsApp coalition and NAASF represent existing social capital that can accelerate every aspect of the transformation — from testing new features to advocating for the partnership model with corporate.
+
+*"You can build the best strategy in the world. But without a community to carry it, it stays on paper."*
+
+---
+
 ## The Two Sides of the Same Coin
 
 | Project | Focus | Audience | Message |
