@@ -1,0 +1,117 @@
+================================================================================
+SUBWAY-V2 PROJECT - WEB SOURCES REFERENCE
+================================================================================
+Last Updated: November 27, 2025
+
+================================================================================
+DATA SOURCES
+================================================================================
+
+1. OpenDataBay - US Subway Store Geographical Locations Dataset
+   URL: https://www.opendatabay.com/data/ai-ml/029b9fa6-60e9-418c-bf38-d294ba32900a
+   Type: Free CSV Download
+   Records: ~25,500 US Subway locations
+   Data Vintage: October 2022
+   License: CC BY-NC-SA 4.0 (Non-commercial)
+   Notes: Static snapshot, no updates planned. Republished from Kaggle.
+
+2. Kaggle - Subway: The Fastest Growing Franchise in the World
+   URL: https://www.kaggle.com/datasets/thedevastator/subway-the-fastest-growing-franchise-in-the-worl
+   Creator: The Devastator
+   Original Source: Franchise Direct
+   Last Modified: October 24, 2022
+   Version: 2
+   Downloads: 1,006
+   License: CC BY-NC-SA 4.0
+
+3. Kaggle Notebook (Unable to access content)
+   URL: https://www.kaggle.com/code/mesharialqahtani2030/notebook6bde51a447
+   Notes: Content not accessible via web fetch (JavaScript rendered)
+
+================================================================================
+CURRENT DATA PROVIDERS (2025 Data - Paid)
+================================================================================
+
+4. ScrapeHero - Subway Location Reports & Data Store
+   Report URL: https://www.scrapehero.com/location-reports/Subway-USA/
+   Store URL: https://www.scrapehero.com/store/product/subway-store-locations-usa/
+   Current Count: 20,162 stores (as of Nov 18, 2025)
+   PRICE: $95 USD (one-time purchase, instant CSV download)
+   Data Fields: Store number, name, status, full address, city, state, zip,
+                county, lat/long, phone, hours, URL, NAICS code, updated date
+   Notes: Most current data available. Sample file available before purchase.
+
+5. LocationsCloud - Subway Store Locations USA
+   URL: https://www.locationscloud.com/product/subway-store-locations-in-the-usa/
+   Current Count: 20,456 stores
+   Formats: JSON, CSV, KML, GeoJSON, Esri Shapefile
+   Notes: Enriched POI data with hours, phone numbers
+
+6. Real Data API - Subway Franchise Location Data 2025
+   URL: https://www.realdataapi.com/subway-franchise-location-data-2025.php
+   Formats: JSON, CSV, XML
+   Notes: API access with regular updates
+
+7. Datarade/Xtract.io - Restaurant Location Data
+   URL: https://datarade.ai/data-products/xtract-io-point-of-interest-poi-data-location-data-p-xtract
+   Coverage: US and Canada
+   Formats: .bin, .json, .csv, .xls, .txt
+   Notes: Commercial POI data provider
+
+================================================================================
+OTHER SUBWAY DATASETS ON KAGGLE
+================================================================================
+
+8. Subway Analysis, Time Series and Visualization
+   URL: https://www.kaggle.com/code/sasakitetsuya/subway-analysis-time-series-and-visualization
+   Notes: Toronto Subway Delay Data analysis
+
+9. Graph Machine Learning with Subway Data
+   URL: https://www.kaggle.com/code/openjny/graph-machine-learning-with-subway-data
+   Notes: Vienna subway network data
+
+10. A Geospatial Analysis of the NYC Subway in R
+    URL: https://www.kaggle.com/code/dashaa/a-geospatial-analysis-of-the-nyc-subway-in-r
+    Notes: NYC subway geospatial analysis
+
+11. MTA Subway Ridership Data Analysis
+    URL: https://www.kaggle.com/code/nickgentz/mta-subway-ridership-data-analysis
+    Notes: August 2023 notebook
+
+================================================================================
+ADDITIONAL RESOURCES
+================================================================================
+
+12. Data.gov - Subway Datasets
+    URL: https://catalog.data.gov/dataset/?tags=subway
+    Notes: Government open data portal
+
+13. Data.world - Subway Datasets
+    URL: https://data.world/datasets/subway
+    Notes: 27 subway-related datasets available
+
+================================================================================
+DATA COMPARISON SUMMARY
+================================================================================
+
+Source                  | Count    | Date        | Cost
+------------------------|----------|-------------|--------
+OpenDataBay/Kaggle      | 25,533   | Oct 2022    | Free
+ScrapeHero              | 20,162   | Nov 2025    | $95
+LocationsCloud          | 20,456   | 2025        | TBD (contact)
+
+CLOSURE ANALYSIS (Oct 2022 - Nov 2025):
+- Total closures: ~5,371 stores (-21%)
+- Timeframe: 36 months
+- Rate: ~149 closures/month (~1,790/year)
+
+STATE-LEVEL COMPARISON:
+State    | Oct 2022 | Nov 2025 | Change
+---------|----------|----------|--------
+CA       | 2,590    | 1,962    | -628 (-24%)
+TX       | 2,194    | 1,806    | -388 (-18%)
+FL       | 1,490    | 1,162    | -328 (-22%)
+OH       | 1,171    | 929      | -242 (-21%)
+IL       | 1,110    | 899      | -211 (-19%)
+
+================================================================================
