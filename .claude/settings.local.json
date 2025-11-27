@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "WebSearch",
+      "WebFetch(domain:www.opendatabay.com)",
+      "Bash(python:*)",
+      "Bash(pip install:*)",
+      "WebFetch(domain:www.scrapehero.com)",
+      "WebFetch(domain:store.scrapehero.com)",
+      "Bash(move researchsubway.csv datahistorical )",
+      "Bash(move researchsubway_locations_analysis.xlsx datahistorical )",
+      "Bash(move researchsubway_locations_FULL.xlsx datahistorical)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
