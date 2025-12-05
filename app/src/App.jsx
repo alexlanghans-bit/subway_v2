@@ -586,27 +586,19 @@ const keystoneHubData = {
     { region: 'Suburban', sales: 98, cogs: 29.8, labor: 28.9, growth: '-2%', stores: 9, color: '#FFC107' },
     { region: 'Rural', sales: 92, cogs: 30.2, labor: 29.8, growth: '-8%', stores: 3, color: '#FF9800' },
   ],
-  // County-level performance data for Mid-Atlantic map
+  // County-level performance data for Central PA (around Dauphin County/Harrisburg)
   countyPerformance: [
-    // Pennsylvania
-    { state: 'PA', county: 'Philadelphia', sales: 92, stores: 45, growth: '-6%', avgDaily: 1650, weatherImpact: -3, eventImpact: 5 },
-    { state: 'PA', county: 'Montgomery', sales: 108, stores: 28, growth: '+8%', avgDaily: 2100, weatherImpact: -2, eventImpact: 3 },
-    { state: 'PA', county: 'Delaware', sales: 102, stores: 18, growth: '+3%', avgDaily: 1920, weatherImpact: -2, eventImpact: 2 },
-    { state: 'PA', county: 'Chester', sales: 115, stores: 14, growth: '+14%', avgDaily: 2280, weatherImpact: -1, eventImpact: 4 },
-    { state: 'PA', county: 'Bucks', sales: 105, stores: 22, growth: '+5%', avgDaily: 2050, weatherImpact: -2, eventImpact: 3 },
-    { state: 'PA', county: 'Lancaster', sales: 98, stores: 16, growth: '-1%', avgDaily: 1780, weatherImpact: -4, eventImpact: 6 },
-    // New Jersey
-    { state: 'NJ', county: 'Camden', sales: 96, stores: 24, growth: '-3%', avgDaily: 1720, weatherImpact: -2, eventImpact: 2 },
-    { state: 'NJ', county: 'Burlington', sales: 104, stores: 19, growth: '+4%', avgDaily: 1980, weatherImpact: -3, eventImpact: 3 },
-    { state: 'NJ', county: 'Gloucester', sales: 101, stores: 12, growth: '+2%', avgDaily: 1850, weatherImpact: -2, eventImpact: 1 },
-    { state: 'NJ', county: 'Mercer', sales: 110, stores: 15, growth: '+10%', avgDaily: 2150, weatherImpact: -1, eventImpact: 8 },
-    // Delaware
-    { state: 'DE', county: 'New Castle', sales: 107, stores: 21, growth: '+7%', avgDaily: 2080, weatherImpact: -2, eventImpact: 4 },
-    { state: 'DE', county: 'Kent', sales: 94, stores: 8, growth: '-5%', avgDaily: 1620, weatherImpact: -3, eventImpact: 2 },
-    // Maryland
-    { state: 'MD', county: 'Baltimore', sales: 99, stores: 38, growth: '0%', avgDaily: 1800, weatherImpact: -2, eventImpact: 6 },
-    { state: 'MD', county: 'Harford', sales: 103, stores: 11, growth: '+4%', avgDaily: 1950, weatherImpact: -2, eventImpact: 2 },
-    { state: 'MD', county: 'Cecil', sales: 91, stores: 6, growth: '-8%', avgDaily: 1580, weatherImpact: -4, eventImpact: 1 },
+    // Central PA - Dauphin and surrounding counties
+    { state: 'PA', county: 'Dauphin', sales: 104, stores: 18, growth: '+4%', avgDaily: 1980, weatherImpact: -2, eventImpact: 7 },
+    { state: 'PA', county: 'Lancaster', sales: 108, stores: 24, growth: '+8%', avgDaily: 2150, weatherImpact: -3, eventImpact: 6 },
+    { state: 'PA', county: 'York', sales: 101, stores: 19, growth: '+2%', avgDaily: 1870, weatherImpact: -2, eventImpact: 4 },
+    { state: 'PA', county: 'Cumberland', sales: 112, stores: 15, growth: '+11%', avgDaily: 2240, weatherImpact: -1, eventImpact: 5 },
+    { state: 'PA', county: 'Lebanon', sales: 97, stores: 8, growth: '-2%', avgDaily: 1720, weatherImpact: -3, eventImpact: 3 },
+    { state: 'PA', county: 'Perry', sales: 91, stores: 4, growth: '-7%', avgDaily: 1540, weatherImpact: -4, eventImpact: 1 },
+    { state: 'PA', county: 'Northumberland', sales: 94, stores: 6, growth: '-4%', avgDaily: 1620, weatherImpact: -3, eventImpact: 2 },
+    { state: 'PA', county: 'Schuylkill', sales: 93, stores: 9, growth: '-5%', avgDaily: 1590, weatherImpact: -4, eventImpact: 2 },
+    { state: 'PA', county: 'Berks', sales: 106, stores: 21, growth: '+6%', avgDaily: 2050, weatherImpact: -2, eventImpact: 5 },
+    { state: 'PA', county: 'Adams', sales: 99, stores: 7, growth: '0%', avgDaily: 1800, weatherImpact: -2, eventImpact: 8 },
   ],
   // Corporate Spine Architecture
   corporateSpine: {
@@ -5725,12 +5717,12 @@ function KeystoneHubPage() {
           <div>
             <h3 style={{ color: colors.text, marginBottom: '8px' }}>Regional Performance</h3>
             <p style={{ color: colors.textLight, marginBottom: '24px' }}>
-              Powered by voluntary data sharing from 297 participating stores across the Mid-Atlantic region.
+              Powered by voluntary data sharing from 131 participating stores across Central Pennsylvania.
             </p>
 
             <div style={keystoneStyles.sharingStats}>
               <div style={keystoneStyles.sharingStat}>
-                <div style={keystoneStyles.sharingStatValue}>297</div>
+                <div style={keystoneStyles.sharingStatValue}>131</div>
                 <div style={keystoneStyles.sharingStatLabel}>Stores Sharing Data</div>
               </div>
               <div style={keystoneStyles.sharingStat}>
@@ -5749,7 +5741,7 @@ function KeystoneHubPage() {
 
             {/* County Heat Map */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-              <h4 style={{ color: colors.text, margin: 0 }}>Mid-Atlantic County Performance Map</h4>
+              <h4 style={{ color: colors.text, margin: 0 }}>Central PA County Performance Map</h4>
               <div style={{ display: 'flex', gap: '8px' }}>
                 {[
                   { id: 'sales', label: '📊 Sales', desc: 'Sales Index' },
