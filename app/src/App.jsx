@@ -4208,10 +4208,10 @@ function DeepDive() {
             }}>
               <h4 style={{ color: colors.yellow, marginBottom: '12px', fontSize: '18px' }}>Why This Is a Huge Departure</h4>
               <p style={{ color: colors.text, lineHeight: '1.7', margin: 0 }}>
-                Historically, Subway's corporate stores were cost centers — a necessary evil for markets without franchisee interest.
-                The Corporate Spine flips this: <strong style={{ color: colors.green }}>corporate/JV stores become the innovation engine</strong> that
-                protects franchisees from unproven initiatives while accelerating what works. No more "mandate first, measure later."
-                Every new menu item, pricing strategy, tech rollout, and format change gets validated in spine stores before franchisees are asked to invest.
+                Subway is 100% franchisee-owned — there are no corporate stores today. This is precisely why the Corporate Spine strategy is so significant.
+                By creating <strong style={{ color: colors.green }}>corporate/JV-owned innovation labs</strong>, Subway builds an engine to
+                test and validate initiatives before asking franchisees to invest. No more "mandate first, measure later."
+                Every new menu item, pricing strategy, tech rollout, and format change gets proven in spine stores first — protecting franchisees from unproven initiatives while accelerating what actually works.
               </p>
             </div>
 
