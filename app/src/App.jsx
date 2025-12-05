@@ -4034,7 +4034,7 @@ function DeepDive() {
             {/* Hero */}
             <div style={styles.keystoneHero}>
               <div style={styles.keystoneHeroTitle}>{keystoneHubData.brandName}</div>
-              <div style={{ fontSize: '0.9em', color: colors.textLight, marginBottom: '8px' }}>{keystoneHubData.poweredBy}</div>
+              <div style={{ fontSize: '0.9em', color: 'rgba(255, 255, 255, 0.8)', marginBottom: '8px' }}>{keystoneHubData.poweredBy}</div>
               <div style={styles.keystoneHeroTagline}>{keystoneHubData.tagline}</div>
             </div>
 
