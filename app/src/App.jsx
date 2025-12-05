@@ -439,6 +439,8 @@ const remodelGovernanceData = {
 }
 
 const keystoneHubData = {
+  brandName: 'Subway Intelligence',
+  poweredBy: 'Powered by Keystone Hub',
   vision: 'AI-powered business intelligence that works FOR franchisees — proactive insights, voluntary data sharing, and regional benchmarking.',
   tagline: 'From data overload to actionable intelligence',
   agents: {
@@ -589,13 +591,13 @@ const keystoneHubData = {
     description: '5%+ of stores (~600) are corporate/JV owned, serving as permanent labs to test innovations before rolling out to franchisees.',
     purpose: [
       { icon: '🧪', title: 'Test New Initiatives', description: 'Menu items, pricing, tech, and formats are tested in controlled environments first' },
-      { icon: '📊', title: 'Prove with Data', description: 'Keystone Hub captures real performance data to validate or kill initiatives' },
+      { icon: '📊', title: 'Prove with Data', description: 'Subway Intelligence captures real performance data to validate or kill initiatives' },
       { icon: '📈', title: 'Scale What Works', description: 'Only proven initiatives roll out to the franchise network' },
       { icon: '🎓', title: 'Training Ground', description: 'Regional academies and certification programs anchored in spine markets' },
     ],
     dataFlow: [
       { step: 1, label: 'Spine Stores', description: 'Corporate/JV stores run controlled tests' },
-      { step: 2, label: 'Keystone Hub', description: 'AI agents collect and analyze performance data' },
+      { step: 2, label: 'Subway Intelligence', description: 'AI agents collect and analyze performance data' },
       { step: 3, label: 'Prove Thresholds', description: 'Minimum lift and margin thresholds must be met' },
       { step: 4, label: 'Tier 1 Pilot', description: 'Top-performing franchisees pilot next' },
       { step: 5, label: 'Network Rollout', description: 'Staged rollout with enablement kits' },
@@ -608,7 +610,7 @@ const keystoneHubData = {
       { dma: 'Miami', stores: 24, role: 'Regional Academy', status: 'planned' },
       { dma: 'Phoenix', stores: 22, role: 'Tech Pilots', status: 'planned' },
     ],
-    keystoneRole: 'Keystone Hub is the intelligence layer that makes the Corporate Spine work. It captures real-time data from spine stores, identifies patterns, validates hypotheses, and generates the proof needed before any initiative goes network-wide.',
+    keystoneRole: 'Subway Intelligence is the intelligence layer that makes the Corporate Spine work. It captures real-time data from spine stores, identifies patterns, validates hypotheses, and generates the proof needed before any initiative goes network-wide.',
     testProtocol: {
       test: { description: 'Corporate/JV spine + Tier-1 operators', requirements: 'Clear hypotheses, KPIs, timelines' },
       prove: { description: 'Minimum lift and margin thresholds met', requirements: 'Ops feasibility confirmed' },
@@ -619,7 +621,7 @@ const keystoneHubData = {
   communityEngagement: {
     headline: 'Franchisee Community',
     tagline: 'Stronger Together Through Connection',
-    description: 'Subway\'s new leadership has prioritized franchisee connection with monthly town halls and regional meetings. Keystone Hub amplifies these connections with always-on community features.',
+    description: 'Subway\'s new leadership has prioritized franchisee connection with monthly town halls and regional meetings. Subway Intelligence amplifies these connections with always-on community features.',
 
     // New corporate initiatives (2025-2026)
     corporateInitiatives: [
@@ -658,7 +660,7 @@ const keystoneHubData = {
       {
         icon: '🤝',
         title: 'Regional Performance Circles',
-        description: 'Between regional meetings, Keystone Hub connects franchisees in similar markets for monthly peer calls.',
+        description: 'Between regional meetings, Subway Intelligence connects franchisees in similar markets for monthly peer calls.',
         benefit: 'Continuous learning year-round, not just at annual events'
       },
       {
@@ -689,7 +691,7 @@ const keystoneHubData = {
         { feature: 'Regional Benchmarks', detail: 'See how your region compares to others on key metrics before the meeting' },
         { feature: 'Market Challenges', detail: 'AI identifies common pain points in your region to focus discussion' },
         { feature: 'Success Stories', detail: 'Top performers in your region flagged for knowledge sharing' },
-        { feature: 'Action Plans', detail: 'Regional commitments tracked in Keystone Hub after each meeting' },
+        { feature: 'Action Plans', detail: 'Regional commitments tracked in Subway Intelligence after each meeting' },
       ]
     },
 
@@ -705,7 +707,7 @@ const keystoneHubData = {
 
     // Quote/testimonial
     quote: {
-      text: 'The town halls are great, but what happens between them matters more. Keystone Hub keeps the conversation going.',
+      text: 'The town halls are great, but what happens between them matters more. Subway Intelligence keeps the conversation going.',
       attribution: 'Multi-unit franchisee, Pennsylvania',
     },
   },
@@ -954,7 +956,7 @@ const presentationSlides = [
     ecosystem: [
       { name: 'Subway-v2', role: 'Strategic spine', status: 'Active' },
       { name: 'Devapp1', role: 'Visual demonstration', status: 'Complete' },
-      { name: 'Keystone-Hub', role: 'Intelligence layer', status: 'In Dev' },
+      { name: 'Subway Intelligence', role: 'Intelligence layer (Powered by Keystone Hub)', status: 'In Dev' },
       { name: 'Subway-Reports', role: 'Data foundation', status: 'Production' },
       { name: 'Check-In', role: 'Communication layer', status: 'In Dev' },
       { name: 'AI-Lever-System', role: 'Execution layer', status: 'Early Dev' },
@@ -4023,7 +4025,7 @@ function DeepDive() {
         >
           <div style={styles.deepDiveSectionTitle(expandedSections.keystoneHub)}>
             <span style={styles.deepDiveSectionIcon}>🧠</span>
-            Keystone Hub: The Intelligence Layer
+            {keystoneHubData.brandName}: The Intelligence Layer
           </div>
           <span style={styles.deepDiveExpand(expandedSections.keystoneHub)}>▼</span>
         </div>
@@ -4031,7 +4033,8 @@ function DeepDive() {
           <div style={styles.deepDiveContent}>
             {/* Hero */}
             <div style={styles.keystoneHero}>
-              <div style={styles.keystoneHeroTitle}>Keystone Hub</div>
+              <div style={styles.keystoneHeroTitle}>{keystoneHubData.brandName}</div>
+              <div style={{ fontSize: '0.9em', color: colors.textLight, marginBottom: '8px' }}>{keystoneHubData.poweredBy}</div>
               <div style={styles.keystoneHeroTagline}>{keystoneHubData.tagline}</div>
             </div>
 
@@ -4332,7 +4335,7 @@ function DeepDive() {
               border: `1px solid ${colors.green}`
             }}>
               <h4 style={{ color: colors.green, marginBottom: '12px', fontSize: '18px' }}>
-                🧠 How Keystone Hub Powers the Spine
+                🧠 How {keystoneHubData.brandName} Powers the Spine
               </h4>
               <p style={{ color: colors.text, lineHeight: '1.7', margin: 0 }}>
                 {keystoneHubData.corporateSpine.keystoneRole}
@@ -4512,10 +4515,10 @@ function DeepDive() {
               border: `1px solid ${colors.green}`
             }}>
               <h4 style={{ color: colors.green, marginBottom: '12px', fontSize: '18px' }}>
-                🧠 How Keystone Hub Enables Community
+                🧠 How {keystoneHubData.brandName} Enables Community
               </h4>
               <p style={{ color: colors.text, lineHeight: '1.7', margin: 0 }}>
-                Keystone Hub is the infrastructure that makes continuous franchisee engagement possible. It aggregates pulse survey responses,
+                Subway Intelligence is the infrastructure that makes continuous franchisee engagement possible. It aggregates pulse survey responses,
                 tracks commitments from town halls, matches franchisees in similar markets for peer circles, surfaces best practices from
                 the community, and routes innovation suggestions through the test→prove→scale pipeline. The platform doesn't replace
                 human connection — it amplifies it by ensuring no insight is lost and every voice can be heard.
@@ -4858,10 +4861,10 @@ function KeystoneHubPage() {
       <div style={keystoneStyles.header}>
         <div style={keystoneStyles.headerLeft}>
           <div style={keystoneStyles.headerTitle}>
-            <span>🧠</span> Keystone Hub
+            <span>🧠</span> {keystoneHubData.brandName}
           </div>
           <div style={keystoneStyles.headerSubtitle}>
-            AI-powered business intelligence working FOR you
+            {keystoneHubData.poweredBy} • AI-powered business intelligence working FOR you
           </div>
         </div>
         <select
@@ -5083,9 +5086,9 @@ function KeystoneHubPage() {
         {/* Architecture Tab - Corporate Spine */}
         {activeTab === 'architecture' && (
           <div>
-            <h3 style={{ color: colors.text, marginBottom: '8px' }}>Keystone Hub + Corporate Spine</h3>
+            <h3 style={{ color: colors.text, marginBottom: '8px' }}>{keystoneHubData.brandName} + Corporate Spine</h3>
             <p style={{ color: colors.textLight, marginBottom: '24px' }}>
-              How Keystone Hub powers the test→prove→scale innovation pipeline.
+              How {keystoneHubData.brandName} powers the test→prove→scale innovation pipeline.
               <em style={{ display: 'block', marginTop: '8px', color: colors.yellow }}>
                 → See Deep Dive for full Corporate Spine strategy
               </em>
@@ -5100,7 +5103,7 @@ function KeystoneHubPage() {
               border: `2px solid ${colors.green}`
             }}>
               <h4 style={{ color: colors.green, marginBottom: '16px', fontSize: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <span>🧠</span> Keystone Hub's Role
+                <span>🧠</span> {keystoneHubData.brandName}'s Role
               </h4>
               <p style={{ color: colors.text, fontSize: '15px', lineHeight: '1.7', marginBottom: '20px' }}>
                 {keystoneHubData.corporateSpine.keystoneRole}
@@ -5108,7 +5111,7 @@ function KeystoneHubPage() {
 
               {/* Data Flow Summary */}
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
-                {['Spine Stores', 'Keystone Hub', 'Prove', 'Scale'].map((step, i) => (
+                {['Spine Stores', 'Subway Intelligence', 'Prove', 'Scale'].map((step, i) => (
                   <Fragment key={i}>
                     <div style={{
                       background: i === 1 ? colors.green : colors.cardBg,
@@ -5125,8 +5128,8 @@ function KeystoneHubPage() {
               </div>
             </div>
 
-            {/* What Keystone Hub Does */}
-            <h4 style={{ color: colors.yellow, marginBottom: '16px', fontSize: '18px' }}>What Keystone Hub Captures from Spine Stores</h4>
+            {/* What Subway Intelligence Does */}
+            <h4 style={{ color: colors.yellow, marginBottom: '16px', fontSize: '18px' }}>What {keystoneHubData.brandName} Captures from Spine Stores</h4>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '24px' }}>
               {[
                 { icon: '📊', label: 'Performance Data', detail: 'Sales, traffic, ticket, dayparts' },
@@ -5156,7 +5159,7 @@ function KeystoneHubPage() {
             }}>
               <h4 style={{ color: colors.yellow, marginBottom: '12px', fontSize: '16px' }}>AI-Powered Validation</h4>
               <p style={{ color: colors.text, fontSize: '14px', lineHeight: '1.6', margin: 0 }}>
-                Keystone Hub's AI agents continuously analyze spine store data to determine if initiatives meet
+                Subway Intelligence's AI agents continuously analyze spine store data to determine if initiatives meet
                 prove thresholds. When an initiative consistently delivers the required lift and margin improvement,
                 it automatically generates a "ready for pilot" recommendation with supporting evidence.
                 No more gut-feel decisions — every scale recommendation is backed by real data.
@@ -5168,9 +5171,9 @@ function KeystoneHubPage() {
         {/* Community Tab */}
         {activeTab === 'community' && (
           <div>
-            <h3 style={{ color: colors.text, marginBottom: '8px' }}>Keystone Hub + Community</h3>
+            <h3 style={{ color: colors.text, marginBottom: '8px' }}>{keystoneHubData.brandName} + Community</h3>
             <p style={{ color: colors.textLight, marginBottom: '24px' }}>
-              How Keystone Hub keeps franchisees connected between town halls and meetings.
+              How {keystoneHubData.brandName} keeps franchisees connected between town halls and meetings.
               <em style={{ display: 'block', marginTop: '8px', color: colors.yellow }}>
                 → See Deep Dive for full Franchisee Community strategy
               </em>
@@ -5185,10 +5188,10 @@ function KeystoneHubPage() {
               border: `2px solid ${colors.green}`
             }}>
               <h4 style={{ color: colors.green, marginBottom: '16px', fontSize: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <span>🧠</span> How Keystone Hub Enables Community
+                <span>🧠</span> How {keystoneHubData.brandName} Enables Community
               </h4>
               <p style={{ color: colors.text, fontSize: '15px', lineHeight: '1.7', margin: 0 }}>
-                Keystone Hub is the infrastructure that makes continuous franchisee engagement possible.
+                Subway Intelligence is the infrastructure that makes continuous franchisee engagement possible.
                 It aggregates pulse survey responses, tracks commitments from town halls, matches franchisees
                 in similar markets for peer circles, surfaces best practices, and routes innovation suggestions
                 through the test→prove→scale pipeline.
@@ -5196,7 +5199,7 @@ function KeystoneHubPage() {
             </div>
 
             {/* Platform Features */}
-            <h4 style={{ color: colors.yellow, marginBottom: '16px', fontSize: '18px' }}>Community Features in Keystone Hub</h4>
+            <h4 style={{ color: colors.yellow, marginBottom: '16px', fontSize: '18px' }}>Community Features in {keystoneHubData.brandName}</h4>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '24px' }}>
               {[
                 { icon: '💬', title: 'Pre-Town Hall Surveys', detail: 'Submit questions, vote on topics before each town hall' },
@@ -5661,7 +5664,7 @@ function App() {
             style={styles.navButton(view === 'keystone')}
             onClick={() => setView('keystone')}
           >
-            🧠 Keystone Hub
+            🧠 {keystoneHubData.brandName}
           </button>
         </nav>
       </header>
