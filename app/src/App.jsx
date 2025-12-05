@@ -547,12 +547,14 @@ const keystoneHubData = {
     ],
   },
   // Benchmarking data (from BI platform)
+  // Boundaries: lowerBound = below this is red flag, upperBound = expected ceiling for this metric
+  // Status: 'normal' = within bounds, 'flag' = outside expected range, 'excellent' = exceeding expectations
   benchmarkData: [
-    { metric: 'Sales Volume', you: 62, peer: 50, top: 90, goal: 70, unit: 'percentile' },
-    { metric: 'SPLH', you: 73, peer: 50, top: 90, goal: 80, unit: 'percentile' },
-    { metric: 'Labor Efficiency', you: 45, peer: 50, top: 90, goal: 65, unit: 'percentile' },
-    { metric: 'Food Cost %', you: 68, peer: 50, top: 90, goal: 75, unit: 'percentile' },
-    { metric: 'Customer Sat.', you: 78, peer: 50, top: 90, goal: 85, unit: 'percentile' },
+    { metric: 'Sales Volume', you: 62, peer: 50, top: 90, goal: 70, lowerBound: 25, upperBound: 85, status: 'normal', insight: 'Within expected range for your market type' },
+    { metric: 'SPLH', you: 73, peer: 50, top: 90, goal: 80, lowerBound: 35, upperBound: 85, status: 'normal', insight: 'Strong efficiency — above peer average' },
+    { metric: 'Labor Efficiency', you: 45, peer: 50, top: 90, goal: 65, lowerBound: 30, upperBound: 80, status: 'flag', insight: 'Below peer average — review scheduling patterns' },
+    { metric: 'Food Cost %', you: 68, peer: 50, top: 90, goal: 75, lowerBound: 40, upperBound: 85, status: 'normal', insight: 'Healthy food cost control' },
+    { metric: 'Customer Sat.', you: 78, peer: 50, top: 90, goal: 85, lowerBound: 35, upperBound: 95, status: 'excellent', insight: 'Top quartile performance — maintain current practices' },
   ],
   // Actionable recommendations (from BI platform)
   recommendations: [
@@ -5381,87 +5383,127 @@ function KeystoneHubPage() {
         {/* Benchmarking Tab */}
         {activeTab === 'benchmark' && (
           <div>
-            <h3 style={{ color: colors.text, marginBottom: '8px' }}>Peer Benchmarking</h3>
+            <h3 style={{ color: colors.text, marginBottom: '8px' }}>Performance Benchmarking</h3>
             <p style={{ color: colors.textLight, marginBottom: '24px' }}>
-              See how you compare to similar stores in your region. Data from 47 participating franchisees.
+              See where you stand relative to expected performance boundaries. Flags indicate areas needing attention.
             </p>
 
-            {/* Percentile Rankings */}
+            {/* Performance Metrics with Boundaries */}
             <div style={{ marginBottom: '32px' }}>
-              {keystoneHubData.benchmarkData.map((b, i) => (
-                <div key={i} style={{ marginBottom: '20px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                    <span style={{ fontSize: '14px', fontWeight: '600', color: colors.text }}>{b.metric}</span>
-                    <span style={{ fontSize: '14px', color: b.you >= b.peer ? colors.green : colors.orange, fontWeight: '600' }}>
-                      {b.you}th percentile
-                    </span>
-                  </div>
-                  <div style={{ position: 'relative', height: '32px', backgroundColor: colors.grayMedium, borderRadius: '16px', overflow: 'hidden' }}>
-                    {/* Peer average marker */}
-                    <div style={{ position: 'absolute', left: `${b.peer}%`, top: 0, bottom: 0, width: '2px', backgroundColor: colors.grayDark, zIndex: 2 }} />
-                    {/* Top performer marker */}
-                    <div style={{ position: 'absolute', left: `${b.top}%`, top: 0, bottom: 0, width: '2px', backgroundColor: colors.green, zIndex: 2 }} />
-                    {/* Goal marker */}
-                    <div style={{ position: 'absolute', left: `${b.goal}%`, top: '4px', bottom: '4px', width: '3px', backgroundColor: colors.yellow, borderRadius: '2px', zIndex: 2 }} />
-                    {/* Your position */}
-                    <div style={{
-                      position: 'absolute',
-                      left: 0,
-                      top: 0,
-                      bottom: 0,
-                      width: `${b.you}%`,
-                      background: b.you >= b.peer ? `linear-gradient(90deg, ${colors.green}40, ${colors.green})` : `linear-gradient(90deg, ${colors.orange}40, ${colors.orange})`,
-                      borderRadius: '16px',
-                      transition: 'width 0.5s ease'
-                    }} />
-                    {/* Your position dot */}
-                    <div style={{
-                      position: 'absolute',
-                      left: `calc(${b.you}% - 12px)`,
-                      top: '4px',
-                      width: '24px',
-                      height: '24px',
-                      backgroundColor: b.you >= b.peer ? colors.green : colors.orange,
-                      borderRadius: '50%',
-                      border: '3px solid white',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'white',
-                      fontSize: '10px',
-                      fontWeight: '700',
-                      zIndex: 3
-                    }}>
-                      {b.you}
+              {keystoneHubData.benchmarkData.map((b, i) => {
+                const statusColor = b.status === 'flag' ? '#dc3545' : b.status === 'excellent' ? colors.green : colors.text;
+                const statusBg = b.status === 'flag' ? 'rgba(220, 53, 69, 0.1)' : b.status === 'excellent' ? 'rgba(2, 137, 64, 0.1)' : 'transparent';
+                const statusIcon = b.status === 'flag' ? '🚩' : b.status === 'excellent' ? '⭐' : '✓';
+                const statusLabel = b.status === 'flag' ? 'Needs Attention' : b.status === 'excellent' ? 'Excellent' : 'Within Bounds';
+
+                return (
+                  <div key={i} style={{ marginBottom: '24px', padding: '16px', backgroundColor: statusBg, borderRadius: '12px', border: b.status === 'flag' ? '1px solid rgba(220, 53, 69, 0.3)' : 'none' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontSize: '14px', fontWeight: '600', color: colors.text }}>{b.metric}</span>
+                        <span style={{
+                          fontSize: '11px',
+                          padding: '2px 8px',
+                          borderRadius: '4px',
+                          backgroundColor: b.status === 'flag' ? '#dc3545' : b.status === 'excellent' ? colors.green : colors.grayMedium,
+                          color: b.status === 'normal' ? colors.text : 'white',
+                          fontWeight: '600'
+                        }}>
+                          {statusIcon} {statusLabel}
+                        </span>
+                      </div>
+                      <span style={{ fontSize: '14px', color: statusColor, fontWeight: '600' }}>
+                        {b.you}th percentile
+                      </span>
+                    </div>
+                    <div style={{ position: 'relative', height: '32px', backgroundColor: colors.grayMedium, borderRadius: '16px', overflow: 'hidden' }}>
+                      {/* Expected bounds zone (shaded area) */}
+                      <div style={{
+                        position: 'absolute',
+                        left: `${b.lowerBound}%`,
+                        width: `${b.upperBound - b.lowerBound}%`,
+                        top: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(2, 137, 64, 0.15)',
+                        zIndex: 1
+                      }} />
+                      {/* Lower bound marker */}
+                      <div style={{ position: 'absolute', left: `${b.lowerBound}%`, top: 0, bottom: 0, width: '2px', backgroundColor: '#dc3545', zIndex: 2 }} />
+                      {/* Peer average marker */}
+                      <div style={{ position: 'absolute', left: `${b.peer}%`, top: 0, bottom: 0, width: '2px', backgroundColor: colors.grayDark, zIndex: 2 }} />
+                      {/* Upper bound marker */}
+                      <div style={{ position: 'absolute', left: `${b.upperBound}%`, top: 0, bottom: 0, width: '2px', backgroundColor: colors.green, zIndex: 2 }} />
+                      {/* Your position bar */}
+                      <div style={{
+                        position: 'absolute',
+                        left: 0,
+                        top: 0,
+                        bottom: 0,
+                        width: `${b.you}%`,
+                        background: b.status === 'flag'
+                          ? `linear-gradient(90deg, rgba(220, 53, 69, 0.3), #dc3545)`
+                          : b.status === 'excellent'
+                            ? `linear-gradient(90deg, ${colors.green}40, ${colors.green})`
+                            : `linear-gradient(90deg, ${colors.yellow}40, ${colors.yellow})`,
+                        borderRadius: '16px',
+                        transition: 'width 0.5s ease'
+                      }} />
+                      {/* Your position dot */}
+                      <div style={{
+                        position: 'absolute',
+                        left: `calc(${b.you}% - 12px)`,
+                        top: '4px',
+                        width: '24px',
+                        height: '24px',
+                        backgroundColor: b.status === 'flag' ? '#dc3545' : b.status === 'excellent' ? colors.green : colors.yellow,
+                        borderRadius: '50%',
+                        border: '3px solid white',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'white',
+                        fontSize: '10px',
+                        fontWeight: '700',
+                        zIndex: 3
+                      }}>
+                        {b.you}
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px', fontSize: '11px', color: colors.grayDark }}>
+                      <span style={{ color: '#dc3545' }}>Lower Bound ({b.lowerBound}th)</span>
+                      <span>Peer Avg ({b.peer}th)</span>
+                      <span style={{ color: colors.green }}>Upper Bound ({b.upperBound}th)</span>
+                    </div>
+                    <div style={{ marginTop: '8px', fontSize: '13px', color: statusColor, fontStyle: 'italic' }}>
+                      {b.insight}
                     </div>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px', fontSize: '11px', color: colors.grayDark }}>
-                    <span>0th</span>
-                    <span style={{ marginLeft: `${b.peer - 5}%` }}>Peer Avg</span>
-                    <span style={{ marginLeft: 'auto' }}>Top 10%</span>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Legend */}
-            <div style={{ display: 'flex', gap: '24px', marginBottom: '24px', padding: '16px', backgroundColor: colors.gray, borderRadius: '8px' }}>
+            <div style={{ display: 'flex', gap: '24px', marginBottom: '24px', padding: '16px', backgroundColor: colors.gray, borderRadius: '8px', flexWrap: 'wrap' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <div style={{ width: '16px', height: '16px', backgroundColor: colors.green, borderRadius: '50%', border: '2px solid white' }} />
-                <span style={{ fontSize: '13px', color: colors.text }}>Your Position</span>
+                <div style={{ width: '40px', height: '16px', backgroundColor: 'rgba(2, 137, 64, 0.15)', border: '1px solid rgba(2, 137, 64, 0.3)', borderRadius: '4px' }} />
+                <span style={{ fontSize: '13px', color: colors.text }}>Expected Range</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div style={{ width: '2px', height: '16px', backgroundColor: '#dc3545' }} />
+                <span style={{ fontSize: '13px', color: colors.text }}>Lower Bound (Flag if below)</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <div style={{ width: '2px', height: '16px', backgroundColor: colors.grayDark }} />
-                <span style={{ fontSize: '13px', color: colors.text }}>Peer Average (50th)</span>
+                <span style={{ fontSize: '13px', color: colors.text }}>Peer Average</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <div style={{ width: '3px', height: '16px', backgroundColor: colors.yellow, borderRadius: '2px' }} />
-                <span style={{ fontSize: '13px', color: colors.text }}>Your Goal</span>
+                <div style={{ width: '16px', height: '16px', backgroundColor: '#dc3545', borderRadius: '50%', border: '2px solid white' }} />
+                <span style={{ fontSize: '13px', color: colors.text }}>🚩 Needs Attention</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <div style={{ width: '2px', height: '16px', backgroundColor: colors.green }} />
-                <span style={{ fontSize: '13px', color: colors.text }}>Top 10%</span>
+                <div style={{ width: '16px', height: '16px', backgroundColor: colors.green, borderRadius: '50%', border: '2px solid white' }} />
+                <span style={{ fontSize: '13px', color: colors.text }}>⭐ Excellent</span>
               </div>
             </div>
 
