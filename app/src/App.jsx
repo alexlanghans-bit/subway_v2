@@ -144,13 +144,6 @@ const operationsOSData = {
     { os: 'Tech OS', coordination: 'System handoffs, data capture at each step, real-time alerts' },
     { os: 'Food OS', coordination: 'Prep timing, freshness windows, build sequence optimization' },
   ],
-  dailyRhythm: [
-    { time: 'Pre-Open (6-10am)', activities: ['Prep schedule execution', 'Staff deployment', 'System checks', 'Inventory verification'] },
-    { time: 'Lunch Peak (11am-2pm)', activities: ['Queue management', 'Labor surge deployment', 'Speed targets active', 'Real-time adjustments'] },
-    { time: 'Between Peaks (2-5pm)', activities: ['Restocking', 'Deep cleaning', 'Training windows', 'Prep for dinner'] },
-    { time: 'Dinner Peak (5-8pm)', activities: ['Second rush execution', 'Fresh batch timing', 'Staff rotation', 'Quality checks'] },
-    { time: 'Close (8-10pm)', activities: ['Waste capture', 'Cash reconciliation', 'Cleaning protocol', 'Next-day prep list'] },
-  ],
   feedbackLoops: [
     { signal: 'Speed of service slow', diagnosis: 'Labor (understaffed?) → Food (prep delays?) → Tech (POS issues?) → Operations (workflow gaps?)' },
     { signal: 'Quality complaints rising', diagnosis: 'Food (freshness?) → Labor (training?) → Operations (rush shortcuts?) → Tech (alerts missed?)' },
@@ -175,12 +168,12 @@ const operatingSystemsData = [
     components: [
       { name: 'Staffing Model', detail: 'Data-driven scheduling based on traffic patterns and order complexity' },
       { name: 'Training Standards', detail: 'Unified certification program: Sandwich Artist → Shift Lead → Manager' },
-      { name: 'Productivity Metrics', detail: 'Sandwiches per labor hour (SPLH) targeting 15-20 depending on volume' },
-      { name: 'Wage Benchmarking', detail: 'Market-rate analysis ensuring competitive pay while maintaining margins' },
+      { name: 'Sales Per Labor Hour (SPLH)', detail: 'Target SPLH varies by local wage rates — $15/hr wage needs ~$60 SPLH for 25% labor cost' },
+      { name: 'True Labor Cost', detail: 'Wages + payroll taxes + workers comp + benefits = real hourly cost from payroll data' },
     ],
     kpis: [
       { metric: 'Labor Cost %', target: '25-28%', current: '~30%' },
-      { metric: 'SPLH', target: '18+', current: '~14' },
+      { metric: 'SPLH vs Target', target: 'Wage-adjusted', current: 'Varies by market' },
       { metric: 'Training Completion', target: '100%', current: '~75%' },
     ],
   },
@@ -189,16 +182,19 @@ const operatingSystemsData = [
     name: 'Real Estate OS',
     icon: '🏢',
     tagline: 'Right locations, right size, right economics',
-    description: 'Strategic portfolio management to optimize store placement and eliminate cannibalization.',
+    description: 'Strategic portfolio management with franchisee protection built in — optimizing placement while ensuring sustainable occupancy costs.',
     components: [
       { name: 'Trade Area Analysis', detail: 'GIS-based analysis of population density, competition, and traffic patterns' },
       { name: 'Cannibalization Model', detail: 'Identify overlapping stores within 1-mile radius for consolidation review' },
-      { name: 'Lease Management', detail: 'Centralized tracking of expiration dates, renewal options, and market rates' },
+      { name: 'Total Occupancy Cost', detail: 'Full picture: base rent + CAM + taxes + insurance + snow removal + landscaping + maintenance reserves' },
+      { name: 'Lease Protection Triggers', detail: 'Alert system when occupancy exceeds 8% — mitigation options before crisis point at 10%' },
+      { name: 'Pass-Through Protection', detail: 'Track unexpected landlord charges: roof repairs, parking lot resurfacing, capital improvements' },
       { name: 'Relocation Pipeline', detail: 'Proactive identification of A+ sites for Tier 1 operator expansion' },
     ],
     kpis: [
       { metric: 'Avg Store Distance', target: '2+ miles', current: '~0.8 miles' },
-      { metric: 'Lease Cost %', target: '8-10%', current: '~12%' },
+      { metric: 'Total Occupancy %', target: '5-7%', current: 'Varies' },
+      { metric: 'Stores Above 10%', target: '0 (red alert)', current: 'Monitoring' },
       { metric: 'Cannibalization Rate', target: '<5%', current: '~15%' },
     ],
   },
@@ -3364,16 +3360,9 @@ function DeepDive() {
 
             {/* Daily Rhythm */}
             <h4 style={{ color: colors.text, marginBottom: '20px' }}>The Daily Rhythm</h4>
-            <div style={styles.rhythmContainer}>
-              {operationsOSData.dailyRhythm.map((period, i) => (
-                <div key={i} style={styles.rhythmCard}>
-                  <div style={styles.rhythmTime}>{period.time}</div>
-                  {period.activities.map((activity, ai) => (
-                    <div key={ai} style={styles.rhythmActivity}>{activity}</div>
-                  ))}
-                </div>
-              ))}
-            </div>
+            <p style={{ color: colors.textLight, marginBottom: '20px', lineHeight: '1.6' }}>
+              Every store has its own rhythm — shaped by location, community patterns, and team dynamics. Operations OS uses AI as a partner to help identify and adapt to your store's natural flow, coordinating the right activities at the right moments throughout each day. Instead of rigid schedules, intelligent systems learn what works best for your specific context and continuously optimize.
+            </p>
 
             {/* Feedback Loops */}
             <h4 style={{ color: colors.text, marginTop: '32px', marginBottom: '20px' }}>Feedback Loops: "We All Need to Get Better"</h4>
@@ -3509,7 +3498,7 @@ function DeepDive() {
           <div style={styles.deepDiveContent}>
             <p style={{ color: colors.textLight, marginBottom: '24px', lineHeight: '1.6' }}>
               The transformation relies on four interlocking Operating Systems that standardize
-              operations across all stores while enabling local excellence.
+              operations across all stores while enabling local excellence. <span style={{ fontStyle: 'italic', fontSize: '0.9em', opacity: 0.8 }}>*Some numbers used for data are estimates and do not reflect current information.</span>
             </p>
             <div style={styles.osGrid}>
               {operatingSystemsData.map((os) => (
