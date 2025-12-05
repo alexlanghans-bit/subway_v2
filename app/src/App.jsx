@@ -4599,6 +4599,53 @@ function DeepDive() {
 function KeystoneHubPage() {
   const [activeTab, setActiveTab] = useState('overview')
   const [selectedStore, setSelectedStore] = useState('all')
+  const [benchmarkScope, setBenchmarkScope] = useState('County')
+
+  // Benchmark data by geographic scope
+  const benchmarkByScope = {
+    National: {
+      label: 'United States',
+      stores: 19000,
+      note: 'All participating Subway locations nationwide',
+      data: [
+        { metric: 'Sales Volume', you: 58, peer: 50, top: 90, lowerBound: 20, upperBound: 85, status: 'normal', insight: 'Performing above national median' },
+        { metric: 'SPLH', you: 65, peer: 50, top: 90, lowerBound: 30, upperBound: 85, status: 'normal', insight: 'Above average labor efficiency nationally' },
+        { metric: 'Labor Efficiency', you: 42, peer: 50, top: 90, lowerBound: 25, upperBound: 80, status: 'flag', insight: 'Below national average — opportunity for improvement' },
+        { metric: 'Food Cost %', you: 55, peer: 50, top: 90, lowerBound: 35, upperBound: 85, status: 'normal', insight: 'Slightly above national median' },
+        { metric: 'Customer Sat.', you: 71, peer: 50, top: 90, lowerBound: 30, upperBound: 95, status: 'normal', insight: 'Good customer satisfaction nationally' },
+      ]
+    },
+    Region: {
+      label: 'Northeast Region',
+      stores: 3200,
+      note: 'PA, NJ, NY, CT, MA, RI, VT, NH, ME',
+      data: [
+        { metric: 'Sales Volume', you: 60, peer: 50, top: 90, lowerBound: 22, upperBound: 85, status: 'normal', insight: 'Solid performance for Northeast market' },
+        { metric: 'SPLH', you: 70, peer: 50, top: 90, lowerBound: 32, upperBound: 85, status: 'normal', insight: 'Strong efficiency in high-wage region' },
+        { metric: 'Labor Efficiency', you: 44, peer: 50, top: 90, lowerBound: 28, upperBound: 80, status: 'flag', insight: 'Below regional peers — review staffing model' },
+        { metric: 'Food Cost %', you: 62, peer: 50, top: 90, lowerBound: 38, upperBound: 85, status: 'normal', insight: 'Good cost control for region' },
+        { metric: 'Customer Sat.', you: 75, peer: 50, top: 90, lowerBound: 33, upperBound: 95, status: 'excellent', insight: 'Above regional average — keep it up' },
+      ]
+    },
+    State: {
+      label: 'Pennsylvania',
+      stores: 890,
+      note: 'All participating PA locations',
+      data: [
+        { metric: 'Sales Volume', you: 61, peer: 50, top: 90, lowerBound: 24, upperBound: 85, status: 'normal', insight: 'Above PA state average' },
+        { metric: 'SPLH', you: 72, peer: 50, top: 90, lowerBound: 34, upperBound: 85, status: 'normal', insight: 'Strong labor productivity for PA' },
+        { metric: 'Labor Efficiency', you: 45, peer: 50, top: 90, lowerBound: 29, upperBound: 80, status: 'flag', insight: 'Slightly below state peers' },
+        { metric: 'Food Cost %', you: 66, peer: 50, top: 90, lowerBound: 39, upperBound: 85, status: 'normal', insight: 'Well-controlled food costs' },
+        { metric: 'Customer Sat.', you: 76, peer: 50, top: 90, lowerBound: 34, upperBound: 95, status: 'excellent', insight: 'Top quartile in Pennsylvania' },
+      ]
+    },
+    County: {
+      label: 'Montgomery County, PA',
+      stores: 47,
+      note: 'Similar demographics & market conditions',
+      data: keystoneHubData.benchmarkData
+    }
+  }
 
   const tabs = [
     { id: 'overview', label: 'Overview', icon: '📊' },
@@ -5395,15 +5442,17 @@ function KeystoneHubPage() {
                 {['National', 'Region', 'State', 'County'].map((level) => (
                   <button
                     key={level}
+                    onClick={() => setBenchmarkScope(level)}
                     style={{
                       padding: '8px 16px',
                       borderRadius: '8px',
-                      border: level === 'County' ? `2px solid ${colors.green}` : `1px solid ${colors.grayMedium}`,
-                      backgroundColor: level === 'County' ? colors.green : 'transparent',
-                      color: level === 'County' ? 'white' : colors.text,
+                      border: benchmarkScope === level ? `2px solid ${colors.green}` : `1px solid ${colors.grayMedium}`,
+                      backgroundColor: benchmarkScope === level ? colors.green : 'transparent',
+                      color: benchmarkScope === level ? 'white' : colors.text,
                       fontSize: '13px',
                       fontWeight: '600',
-                      cursor: 'pointer'
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease'
                     }}
                   >
                     {level}
@@ -5423,16 +5472,16 @@ function KeystoneHubPage() {
               marginBottom: '24px'
             }}>
               <span style={{ fontSize: '13px', color: colors.textLight }}>Comparing against:</span>
-              <span style={{ fontSize: '14px', fontWeight: '600', color: colors.green }}>Montgomery County, PA</span>
+              <span style={{ fontSize: '14px', fontWeight: '600', color: colors.green }}>{benchmarkByScope[benchmarkScope].label}</span>
               <span style={{ fontSize: '13px', color: colors.textLight }}>•</span>
-              <span style={{ fontSize: '13px', color: colors.textLight }}>47 participating stores</span>
+              <span style={{ fontSize: '13px', color: colors.textLight }}>{benchmarkByScope[benchmarkScope].stores.toLocaleString()} participating stores</span>
               <span style={{ fontSize: '13px', color: colors.textLight }}>•</span>
-              <span style={{ fontSize: '13px', color: colors.textLight }}>Similar demographics & market conditions</span>
+              <span style={{ fontSize: '13px', color: colors.textLight }}>{benchmarkByScope[benchmarkScope].note}</span>
             </div>
 
             {/* Performance Metrics with Boundaries */}
             <div style={{ marginBottom: '32px' }}>
-              {keystoneHubData.benchmarkData.map((b, i) => {
+              {benchmarkByScope[benchmarkScope].data.map((b, i) => {
                 const statusColor = b.status === 'flag' ? '#dc3545' : b.status === 'excellent' ? colors.green : colors.text;
                 const statusBg = b.status === 'flag' ? 'rgba(220, 53, 69, 0.1)' : b.status === 'excellent' ? 'rgba(2, 137, 64, 0.1)' : 'transparent';
                 const statusIcon = b.status === 'flag' ? '🚩' : b.status === 'excellent' ? '⭐' : '✓';
