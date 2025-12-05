@@ -246,7 +246,6 @@ const tieringDetailData = {
   },
   auvMath: {
     explanation: 'Store closures disproportionately remove low-AUV locations, naturally raising the network average.',
-    example: 'If 5,000 closed stores averaged $300k and 15,000 remaining average $480k, you\'re already at $480k without any same-store growth.',
   },
   inflationAdjustment: {
     principle: 'The minimum AUV floor should adjust for inflation annually to maintain real purchasing power.',
@@ -411,6 +410,10 @@ const remodelGovernanceData = {
     { tier: 'Standard', cost: '$40-60k', focus: 'Full refresh', elements: ['Essential +', 'New flooring', 'Counter updates', 'Seating refresh'], roi: '18-24 month payback' },
     { tier: 'Premium', cost: '$60-80k', focus: 'Complete modernization', elements: ['Standard +', 'Kitchen upgrades', 'Digital integration', 'Layout optimization'], roi: '24-36 month payback' },
   ],
+  costTransparency: {
+    note: 'All tier costs are total build-to-cost: materials + labor + permits fully installed.',
+    quoteSharing: 'Standardized quote sharing across the brand — franchisees submit contractor bids to a central database, creating visibility into what remodels actually cost by region and scope. Know the benchmark. Know if you\'re getting ripped off.',
+  },
   process: [
     { stage: 'Design', requirement: 'Franchisee Advisory Council reviews all package elements. Must justify each cost.' },
     { stage: 'Pilot', requirement: 'Test in 30-50 stores across different AUV levels. Measure actual sales lift for 6 months.' },
@@ -3764,6 +3767,12 @@ function DeepDive() {
                   <div style={styles.remodelTierROI}>Target: {pkg.roi}</div>
                 </div>
               ))}
+            </div>
+
+            {/* Cost Transparency */}
+            <div style={{ backgroundColor: colors.gray, borderRadius: '12px', padding: '20px', marginTop: '20px', marginBottom: '32px' }}>
+              <p style={{ color: colors.text, fontWeight: '600', marginBottom: '8px' }}>{remodelGovernanceData.costTransparency.note}</p>
+              <p style={{ color: colors.textLight, lineHeight: '1.6', margin: 0 }}>{remodelGovernanceData.costTransparency.quoteSharing}</p>
             </div>
 
             {/* Process */}
