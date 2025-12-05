@@ -5383,10 +5383,52 @@ function KeystoneHubPage() {
         {/* Benchmarking Tab */}
         {activeTab === 'benchmark' && (
           <div>
-            <h3 style={{ color: colors.text, marginBottom: '8px' }}>Performance Benchmarking</h3>
-            <p style={{ color: colors.textLight, marginBottom: '24px' }}>
-              See where you stand relative to expected performance boundaries. Flags indicate areas needing attention.
-            </p>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
+              <div>
+                <h3 style={{ color: colors.text, marginBottom: '8px' }}>Performance Benchmarking</h3>
+                <p style={{ color: colors.textLight, margin: 0 }}>
+                  See where you stand relative to expected performance boundaries. Flags indicate areas needing attention.
+                </p>
+              </div>
+              {/* Geographic Filter */}
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                {['National', 'Region', 'State', 'County'].map((level) => (
+                  <button
+                    key={level}
+                    style={{
+                      padding: '8px 16px',
+                      borderRadius: '8px',
+                      border: level === 'County' ? `2px solid ${colors.green}` : `1px solid ${colors.grayMedium}`,
+                      backgroundColor: level === 'County' ? colors.green : 'transparent',
+                      color: level === 'County' ? 'white' : colors.text,
+                      fontSize: '13px',
+                      fontWeight: '600',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {level}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Current Filter Context */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              padding: '12px 16px',
+              backgroundColor: colors.gray,
+              borderRadius: '8px',
+              marginBottom: '24px'
+            }}>
+              <span style={{ fontSize: '13px', color: colors.textLight }}>Comparing against:</span>
+              <span style={{ fontSize: '14px', fontWeight: '600', color: colors.green }}>Montgomery County, PA</span>
+              <span style={{ fontSize: '13px', color: colors.textLight }}>•</span>
+              <span style={{ fontSize: '13px', color: colors.textLight }}>47 participating stores</span>
+              <span style={{ fontSize: '13px', color: colors.textLight }}>•</span>
+              <span style={{ fontSize: '13px', color: colors.textLight }}>Similar demographics & market conditions</span>
+            </div>
 
             {/* Performance Metrics with Boundaries */}
             <div style={{ marginBottom: '32px' }}>
