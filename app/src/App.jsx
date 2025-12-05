@@ -577,7 +577,7 @@ const keystoneHubData = {
     { factor: 'Local Events', correlation: 0.58, strength: 'Moderate', action: 'Track events calendar' },
     { factor: 'Gas Prices', correlation: -0.42, strength: 'Moderate (Inverse)', action: 'Value deals when gas up' },
   ],
-  // Regional heat map data
+  // Regional heat map data by location type
   regionalData: [
     { region: 'Downtown', sales: 112, cogs: 27.2, labor: 26.8, growth: '+12%', stores: 8, color: '#028940' },
     { region: 'University', sales: 109, cogs: 27.8, labor: 26.5, growth: '+9%', stores: 5, color: '#028940' },
@@ -585,6 +585,28 @@ const keystoneHubData = {
     { region: 'Highway/Travel', sales: 104, cogs: 28.1, labor: 27.5, growth: '+4%', stores: 4, color: '#8BC34A' },
     { region: 'Suburban', sales: 98, cogs: 29.8, labor: 28.9, growth: '-2%', stores: 9, color: '#FFC107' },
     { region: 'Rural', sales: 92, cogs: 30.2, labor: 29.8, growth: '-8%', stores: 3, color: '#FF9800' },
+  ],
+  // County-level performance data for Mid-Atlantic map
+  countyPerformance: [
+    // Pennsylvania
+    { state: 'PA', county: 'Philadelphia', sales: 92, stores: 45, growth: '-6%', avgDaily: 1650, weatherImpact: -3, eventImpact: 5 },
+    { state: 'PA', county: 'Montgomery', sales: 108, stores: 28, growth: '+8%', avgDaily: 2100, weatherImpact: -2, eventImpact: 3 },
+    { state: 'PA', county: 'Delaware', sales: 102, stores: 18, growth: '+3%', avgDaily: 1920, weatherImpact: -2, eventImpact: 2 },
+    { state: 'PA', county: 'Chester', sales: 115, stores: 14, growth: '+14%', avgDaily: 2280, weatherImpact: -1, eventImpact: 4 },
+    { state: 'PA', county: 'Bucks', sales: 105, stores: 22, growth: '+5%', avgDaily: 2050, weatherImpact: -2, eventImpact: 3 },
+    { state: 'PA', county: 'Lancaster', sales: 98, stores: 16, growth: '-1%', avgDaily: 1780, weatherImpact: -4, eventImpact: 6 },
+    // New Jersey
+    { state: 'NJ', county: 'Camden', sales: 96, stores: 24, growth: '-3%', avgDaily: 1720, weatherImpact: -2, eventImpact: 2 },
+    { state: 'NJ', county: 'Burlington', sales: 104, stores: 19, growth: '+4%', avgDaily: 1980, weatherImpact: -3, eventImpact: 3 },
+    { state: 'NJ', county: 'Gloucester', sales: 101, stores: 12, growth: '+2%', avgDaily: 1850, weatherImpact: -2, eventImpact: 1 },
+    { state: 'NJ', county: 'Mercer', sales: 110, stores: 15, growth: '+10%', avgDaily: 2150, weatherImpact: -1, eventImpact: 8 },
+    // Delaware
+    { state: 'DE', county: 'New Castle', sales: 107, stores: 21, growth: '+7%', avgDaily: 2080, weatherImpact: -2, eventImpact: 4 },
+    { state: 'DE', county: 'Kent', sales: 94, stores: 8, growth: '-5%', avgDaily: 1620, weatherImpact: -3, eventImpact: 2 },
+    // Maryland
+    { state: 'MD', county: 'Baltimore', sales: 99, stores: 38, growth: '0%', avgDaily: 1800, weatherImpact: -2, eventImpact: 6 },
+    { state: 'MD', county: 'Harford', sales: 103, stores: 11, growth: '+4%', avgDaily: 1950, weatherImpact: -2, eventImpact: 2 },
+    { state: 'MD', county: 'Cecil', sales: 91, stores: 6, growth: '-8%', avgDaily: 1580, weatherImpact: -4, eventImpact: 1 },
   ],
   // Corporate Spine Architecture
   corporateSpine: {
@@ -4600,6 +4622,29 @@ function KeystoneHubPage() {
   const [activeTab, setActiveTab] = useState('overview')
   const [selectedStore, setSelectedStore] = useState('all')
   const [benchmarkScope, setBenchmarkScope] = useState('County')
+  const [mapOverlay, setMapOverlay] = useState('sales') // sales, weather, events
+  const [selectedCounty, setSelectedCounty] = useState(null)
+
+  // Helper to get color based on sales index
+  const getPerformanceColor = (sales, overlay, data) => {
+    if (overlay === 'weather') {
+      const impact = data.weatherImpact
+      if (impact <= -4) return '#dc3545' // Strong negative
+      if (impact <= -2) return '#FFC107' // Moderate negative
+      return '#8BC34A' // Minimal impact
+    }
+    if (overlay === 'events') {
+      const impact = data.eventImpact
+      if (impact >= 6) return '#028940' // High event boost
+      if (impact >= 3) return '#8BC34A' // Moderate boost
+      return '#FFC107' // Low boost
+    }
+    // Default: sales performance
+    if (sales >= 105) return '#028940' // Strong performer
+    if (sales >= 100) return '#8BC34A' // Above average
+    if (sales >= 95) return '#FFC107' // Average
+    return '#FF9800' // Below average
+  }
 
   // Benchmark data by geographic scope
   const benchmarkByScope = {
@@ -5680,16 +5725,16 @@ function KeystoneHubPage() {
           <div>
             <h3 style={{ color: colors.text, marginBottom: '8px' }}>Regional Performance</h3>
             <p style={{ color: colors.textLight, marginBottom: '24px' }}>
-              Powered by voluntary data sharing from 47 participating franchisees in your region.
+              Powered by voluntary data sharing from 297 participating stores across the Mid-Atlantic region.
             </p>
 
             <div style={keystoneStyles.sharingStats}>
               <div style={keystoneStyles.sharingStat}>
-                <div style={keystoneStyles.sharingStatValue}>47</div>
+                <div style={keystoneStyles.sharingStatValue}>297</div>
                 <div style={keystoneStyles.sharingStatLabel}>Stores Sharing Data</div>
               </div>
               <div style={keystoneStyles.sharingStat}>
-                <div style={keystoneStyles.sharingStatValue}>$1,840</div>
+                <div style={keystoneStyles.sharingStatValue}>$1,890</div>
                 <div style={keystoneStyles.sharingStatLabel}>Regional Avg Daily/Store</div>
               </div>
               <div style={keystoneStyles.sharingStat}>
@@ -5702,8 +5747,168 @@ function KeystoneHubPage() {
               </div>
             </div>
 
-            {/* Regional Heat Map */}
-            <h4 style={{ color: colors.text, marginBottom: '16px' }}>Regional Performance Heat Map</h4>
+            {/* County Heat Map */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <h4 style={{ color: colors.text, margin: 0 }}>Mid-Atlantic County Performance Map</h4>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                {[
+                  { id: 'sales', label: '📊 Sales', desc: 'Sales Index' },
+                  { id: 'weather', label: '🌧️ Weather', desc: 'Weather Impact' },
+                  { id: 'events', label: '🎉 Events', desc: 'Event Boost' }
+                ].map(overlay => (
+                  <button
+                    key={overlay.id}
+                    onClick={() => setMapOverlay(overlay.id)}
+                    style={{
+                      padding: '6px 12px',
+                      borderRadius: '6px',
+                      border: mapOverlay === overlay.id ? `2px solid ${colors.green}` : `1px solid ${colors.grayMedium}`,
+                      backgroundColor: mapOverlay === overlay.id ? colors.green : 'transparent',
+                      color: mapOverlay === overlay.id ? 'white' : colors.text,
+                      fontSize: '12px',
+                      fontWeight: '600',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {overlay.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Visual Map Grid */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(5, 1fr)',
+              gap: '8px',
+              marginBottom: '16px',
+              padding: '20px',
+              backgroundColor: colors.gray,
+              borderRadius: '12px'
+            }}>
+              {keystoneHubData.countyPerformance.map((county, i) => (
+                <div
+                  key={i}
+                  onClick={() => setSelectedCounty(selectedCounty === i ? null : i)}
+                  style={{
+                    backgroundColor: getPerformanceColor(county.sales, mapOverlay, county),
+                    borderRadius: '8px',
+                    padding: '12px',
+                    color: 'white',
+                    cursor: 'pointer',
+                    transition: 'transform 0.2s, box-shadow 0.2s',
+                    transform: selectedCounty === i ? 'scale(1.05)' : 'scale(1)',
+                    boxShadow: selectedCounty === i ? '0 4px 12px rgba(0,0,0,0.3)' : 'none',
+                    border: selectedCounty === i ? '2px solid white' : '2px solid transparent'
+                  }}
+                >
+                  <div style={{ fontSize: '10px', opacity: 0.9, marginBottom: '2px' }}>{county.state}</div>
+                  <div style={{ fontSize: '13px', fontWeight: '700', marginBottom: '4px' }}>{county.county}</div>
+                  <div style={{ fontSize: '18px', fontWeight: '700' }}>
+                    {mapOverlay === 'sales' && county.sales}
+                    {mapOverlay === 'weather' && `${county.weatherImpact}%`}
+                    {mapOverlay === 'events' && `+${county.eventImpact}%`}
+                  </div>
+                  <div style={{ fontSize: '10px', opacity: 0.8, marginTop: '4px' }}>{county.stores} stores</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Map Legend */}
+            <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', fontSize: '12px' }}>
+              {mapOverlay === 'sales' && (
+                <>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <div style={{ width: '16px', height: '16px', backgroundColor: '#028940', borderRadius: '4px' }} />
+                    <span style={{ color: colors.text }}>105+ (Strong)</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <div style={{ width: '16px', height: '16px', backgroundColor: '#8BC34A', borderRadius: '4px' }} />
+                    <span style={{ color: colors.text }}>100-104 (Above Avg)</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <div style={{ width: '16px', height: '16px', backgroundColor: '#FFC107', borderRadius: '4px' }} />
+                    <span style={{ color: colors.text }}>95-99 (Average)</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <div style={{ width: '16px', height: '16px', backgroundColor: '#FF9800', borderRadius: '4px' }} />
+                    <span style={{ color: colors.text }}>&lt;95 (Below Avg)</span>
+                  </div>
+                </>
+              )}
+              {mapOverlay === 'weather' && (
+                <>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <div style={{ width: '16px', height: '16px', backgroundColor: '#8BC34A', borderRadius: '4px' }} />
+                    <span style={{ color: colors.text }}>Minimal Impact (-1%)</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <div style={{ width: '16px', height: '16px', backgroundColor: '#FFC107', borderRadius: '4px' }} />
+                    <span style={{ color: colors.text }}>Moderate (-2 to -3%)</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <div style={{ width: '16px', height: '16px', backgroundColor: '#dc3545', borderRadius: '4px' }} />
+                    <span style={{ color: colors.text }}>Strong Impact (-4%+)</span>
+                  </div>
+                </>
+              )}
+              {mapOverlay === 'events' && (
+                <>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <div style={{ width: '16px', height: '16px', backgroundColor: '#028940', borderRadius: '4px' }} />
+                    <span style={{ color: colors.text }}>High Boost (+6%+)</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <div style={{ width: '16px', height: '16px', backgroundColor: '#8BC34A', borderRadius: '4px' }} />
+                    <span style={{ color: colors.text }}>Moderate (+3-5%)</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <div style={{ width: '16px', height: '16px', backgroundColor: '#FFC107', borderRadius: '4px' }} />
+                    <span style={{ color: colors.text }}>Low (+1-2%)</span>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Selected County Detail */}
+            {selectedCounty !== null && (
+              <div style={{
+                backgroundColor: colors.cardBg,
+                borderRadius: '12px',
+                padding: '20px',
+                marginBottom: '24px',
+                border: `2px solid ${colors.green}`
+              }}>
+                <h4 style={{ color: colors.green, marginBottom: '12px' }}>
+                  {keystoneHubData.countyPerformance[selectedCounty].county} County, {keystoneHubData.countyPerformance[selectedCounty].state}
+                </h4>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '16px' }}>
+                  <div>
+                    <div style={{ fontSize: '12px', color: colors.textLight }}>Sales Index</div>
+                    <div style={{ fontSize: '20px', fontWeight: '700', color: colors.text }}>{keystoneHubData.countyPerformance[selectedCounty].sales}</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '12px', color: colors.textLight }}>Growth</div>
+                    <div style={{ fontSize: '20px', fontWeight: '700', color: keystoneHubData.countyPerformance[selectedCounty].growth.startsWith('+') ? colors.green : '#FF9800' }}>{keystoneHubData.countyPerformance[selectedCounty].growth}</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '12px', color: colors.textLight }}>Avg Daily</div>
+                    <div style={{ fontSize: '20px', fontWeight: '700', color: colors.text }}>${keystoneHubData.countyPerformance[selectedCounty].avgDaily.toLocaleString()}</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '12px', color: colors.textLight }}>Weather Impact</div>
+                    <div style={{ fontSize: '20px', fontWeight: '700', color: '#FFC107' }}>{keystoneHubData.countyPerformance[selectedCounty].weatherImpact}%</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '12px', color: colors.textLight }}>Event Boost</div>
+                    <div style={{ fontSize: '20px', fontWeight: '700', color: colors.green }}>+{keystoneHubData.countyPerformance[selectedCounty].eventImpact}%</div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Location Type Heat Map */}
+            <h4 style={{ color: colors.text, marginBottom: '16px' }}>Performance by Location Type</h4>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '24px' }}>
               {keystoneHubData.regionalData.map((r, i) => (
                 <div key={i} style={{
