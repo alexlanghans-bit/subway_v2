@@ -603,13 +603,31 @@ const keystoneHubData = {
       { step: 5, label: 'Network Rollout', description: 'Staged rollout with enablement kits' },
     ],
     spineMarkets: [
-      { dma: 'New York', stores: 45, role: 'Flagship Urban', status: 'active' },
-      { dma: 'Los Angeles', stores: 38, role: 'Format Testing', status: 'active' },
-      { dma: 'Chicago', stores: 32, role: 'Menu Innovation', status: 'active' },
-      { dma: 'Dallas', stores: 28, role: 'Drive-Thru Labs', status: 'active' },
-      { dma: 'Miami', stores: 24, role: 'Regional Academy', status: 'planned' },
-      { dma: 'Phoenix', stores: 22, role: 'Tech Pilots', status: 'planned' },
+      // Urban Markets
+      { dma: 'New York', stores: 45, role: 'Flagship Urban', status: 'active', category: 'Urban' },
+      { dma: 'Chicago', stores: 32, role: 'Menu Innovation', status: 'active', category: 'Urban' },
+      // Suburban Markets
+      { dma: 'Dallas Suburbs', stores: 28, role: 'Drive-Thru Labs', status: 'active', category: 'Suburban' },
+      { dma: 'Phoenix', stores: 22, role: 'Tech Pilots', status: 'planned', category: 'Suburban' },
+      // Rural/Small Town Markets
+      { dma: 'Central Ohio', stores: 15, role: 'Small Town Model', status: 'planned', category: 'Rural' },
+      { dma: 'Iowa Corridor', stores: 12, role: 'Rural Economics', status: 'planned', category: 'Rural' },
+      // Market Revival Program
+      { dma: 'Philadelphia', stores: 35, role: 'Market Revival', status: 'priority', category: 'Revival' },
+      { dma: 'Detroit', stores: 25, role: 'Market Revival', status: 'planned', category: 'Revival' },
     ],
+    marketRevival: {
+      headline: 'Market Revival Program',
+      problem: 'For decades, struggling markets were left to franchisees to fix — dumping their cash into problem stores without corporate support. Markets like Philadelphia have historically underperformed, with franchisees bearing all the risk.',
+      solution: 'Corporate takes ownership of struggling markets, invests in revitalization (remodels, marketing, operations), proves the model works, then refranchises to qualified Tier 1 operators.',
+      principle: 'Franchisees are brand partners, not owners of the brand itself. Corporate must own the hardest problems — not pass them to franchisees.',
+      benefits: [
+        'Corporate proves turnaround is possible before asking franchisees to invest',
+        'Tier 1 operators get proven, revitalized markets — not fixer-uppers',
+        'Brand reputation rebuilt in historically weak markets',
+        'Creates playbook for market revival that can be repeated',
+      ],
+    },
     keystoneRole: 'Subway Intelligence is the intelligence layer that makes the Corporate Spine work. It captures real-time data from spine stores, identifies patterns, validates hypotheses, and generates the proof needed before any initiative goes network-wide.',
     testProtocol: {
       test: { description: 'Corporate/JV spine + Tier-1 operators', requirements: 'Clear hypotheses, KPIs, timelines' },
@@ -4278,30 +4296,72 @@ function DeepDive() {
             </div>
 
             {/* Spine Markets */}
-            <h4 style={{ color: colors.text, marginBottom: '20px', fontSize: '20px' }}>Spine Market Deployment</h4>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '32px' }}>
+            <h4 style={{ color: colors.text, marginBottom: '8px', fontSize: '20px' }}>Spine Market Deployment</h4>
+            <p style={{ color: colors.textLight, marginBottom: '20px', fontSize: '14px' }}>
+              Strategic cross-section of market types to capture insights across urban, suburban, rural, and revival contexts.
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '32px' }}>
               {keystoneHubData.corporateSpine.spineMarkets.map((market, idx) => (
                 <div key={idx} style={{
                   background: colors.cardBg,
                   borderRadius: '12px',
                   padding: '20px',
-                  borderLeft: `4px solid ${market.status === 'active' ? colors.green : colors.yellow}`
+                  borderLeft: `4px solid ${market.status === 'active' ? colors.green : market.status === 'priority' ? '#FF6B35' : colors.yellow}`
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                     <div style={{ color: colors.text, fontWeight: '700', fontSize: '16px' }}>{market.dma}</div>
                     <div style={{
-                      background: market.status === 'active' ? 'rgba(2, 137, 64, 0.2)' : 'rgba(255, 194, 13, 0.2)',
-                      color: market.status === 'active' ? colors.green : colors.yellow,
+                      background: market.status === 'active' ? 'rgba(2, 137, 64, 0.2)' : market.status === 'priority' ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 194, 13, 0.2)',
+                      color: market.status === 'active' ? colors.green : market.status === 'priority' ? '#FF6B35' : colors.yellow,
                       padding: '4px 8px',
                       borderRadius: '4px',
                       fontSize: '11px',
                       fontWeight: '600'
-                    }}>{market.status === 'active' ? '● Active' : '○ Planned'}</div>
+                    }}>{market.status === 'active' ? '● Active' : market.status === 'priority' ? '★ Priority' : '○ Planned'}</div>
                   </div>
-                  <div style={{ color: colors.textLight, fontSize: '13px', marginBottom: '4px' }}>{market.role}</div>
+                  <div style={{ color: colors.textLight, fontSize: '12px', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{market.category}</div>
+                  <div style={{ color: colors.text, fontSize: '13px', marginBottom: '4px' }}>{market.role}</div>
                   <div style={{ color: '#FF6B35', fontSize: '14px', fontWeight: '600' }}>{market.stores} stores</div>
                 </div>
               ))}
+            </div>
+
+            {/* Market Revival Program */}
+            <div style={{
+              background: `linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, ${colors.cardBg} 100%)`,
+              borderRadius: '16px',
+              padding: '24px',
+              marginBottom: '32px',
+              border: '2px solid #FF6B35'
+            }}>
+              <h4 style={{ color: '#FF6B35', marginBottom: '12px', fontSize: '18px' }}>
+                🔄 {keystoneHubData.corporateSpine.marketRevival.headline}
+              </h4>
+              <p style={{ color: colors.text, lineHeight: '1.7', marginBottom: '16px' }}>
+                <strong>The Problem:</strong> {keystoneHubData.corporateSpine.marketRevival.problem}
+              </p>
+              <p style={{ color: colors.text, lineHeight: '1.7', marginBottom: '16px' }}>
+                <strong>The Solution:</strong> {keystoneHubData.corporateSpine.marketRevival.solution}
+              </p>
+              <div style={{
+                background: 'rgba(255, 107, 53, 0.1)',
+                padding: '16px',
+                borderRadius: '8px',
+                marginBottom: '16px',
+                borderLeft: '4px solid #FF6B35'
+              }}>
+                <p style={{ color: colors.text, fontStyle: 'italic', margin: 0, lineHeight: '1.6' }}>
+                  "{keystoneHubData.corporateSpine.marketRevival.principle}"
+                </p>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
+                {keystoneHubData.corporateSpine.marketRevival.benefits.map((benefit, idx) => (
+                  <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                    <span style={{ color: colors.green }}>✓</span>
+                    <span style={{ color: colors.textLight, fontSize: '14px' }}>{benefit}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Test Protocol */}
