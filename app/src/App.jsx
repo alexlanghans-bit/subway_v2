@@ -2842,12 +2842,6 @@ function KPICard({ data }) {
 }
 
 function PhaseCard({ phase }) {
-  // Handle both numbers and string ranges for store counts
-  const formatStoreCount = (count) => {
-    if (typeof count === 'number') return count.toLocaleString()
-    return count // Already a formatted string range
-  }
-
   return (
     <div style={styles.phaseCard(phase.status)}>
       <div style={styles.phaseBadge(phase.status)}>
@@ -2856,7 +2850,10 @@ function PhaseCard({ phase }) {
       <div style={styles.phaseYears}>Years {phase.years}</div>
       <div style={styles.phaseName}>Phase {phase.id}: {phase.name}</div>
       <div style={styles.phaseStores}>
-        {formatStoreCount(phase.storeStart)} → {formatStoreCount(phase.storeEnd)}
+        Target: {phase.tierTarget.tier1} Tier 1
+      </div>
+      <div style={{ fontSize: '12px', color: colors.textLight, marginBottom: '8px' }}>
+        {phase.tierTarget.tier2} Tier 2 · {phase.tierTarget.tier3} Tier 3
       </div>
       <div style={styles.phaseFocus}>{phase.focus}</div>
       <div>
@@ -3277,7 +3274,10 @@ function SlideContent({ slide }) {
                   Phase {phase.id}: {phase.name}
                 </div>
                 <div style={{ fontSize: '24px', fontWeight: '700', color: colors.green }}>
-                  {phase.storeEnd.toLocaleString()} stores
+                  {phase.tierTarget.tier1} Tier 1
+                </div>
+                <div style={{ fontSize: '13px', color: colors.textLight, marginTop: '4px' }}>
+                  {phase.tierTarget.tier2} Tier 2 · {phase.tierTarget.tier3} Tier 3
                 </div>
               </div>
             ))}
