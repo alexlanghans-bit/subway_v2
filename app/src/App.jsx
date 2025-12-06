@@ -38,42 +38,36 @@ const phaseData = {
   phases: [
     {
       id: 1,
-      name: 'Obvious Surgery',
+      name: 'Foundation & Assessment',
       years: '0-3',
       status: 'active',
-      storeStart: 19000,
-      storeEnd: '16,000-17,000',
-      storeEndNum: 16500,
-      focus: 'Remove unviable locations, launch consolidation fund, lock Food OS 1.0',
-      milestones: ['Tiering live', 'First spine markets', 'Relocation program active'],
+      tierTarget: { tier1: '50%', tier2: '40%', tier3: '10%' },
+      focus: 'Establish tiering system, launch improvement programs, build support infrastructure',
+      milestones: ['Tiering live', 'Path to Tier 1 programs active', 'Migration tracking operational'],
     },
     {
       id: 2,
-      name: 'Strategic Cleanup',
+      name: 'Acceleration',
       years: '3-6',
       status: 'upcoming',
-      storeStart: '16,000-17,000',
-      storeEnd: '13,500-14,500',
-      storeEndNum: 14000,
-      focus: 'Trade-area optimization, operator development, expand spine',
-      milestones: ['Overlap resolved', 'Tier-1 skew', 'Tech standardized'],
+      tierTarget: { tier1: '70%', tier2: '25%', tier3: '5%' },
+      focus: 'Scale successful interventions, operator development, expand proven programs',
+      milestones: ['70% Tier 1 achieved', 'Tier 2→1 success rate 80%+', 'Tech standardized'],
     },
     {
       id: 3,
-      name: 'Precision & Lock-In',
+      name: 'Excellence & Lock-In',
       years: '6-10',
       status: 'future',
-      storeStart: '13,500-14,500',
-      storeEnd: '11,000-13,000',
-      storeEndNum: 12000,
-      focus: 'Non-renew marginal, selective A+ openings, institutionalize',
-      milestones: ['100% compliant', '5%+ spine', 'All stores profitable'],
+      tierTarget: { tier1: '90%', tier2: '9.5%', tier3: '0.5%' },
+      focus: 'Achieve target distribution, institutionalize excellence, selective growth',
+      milestones: ['90% Tier 1 achieved', 'Near-zero exits', 'All stores profitable'],
     },
   ],
   // Franchisee-First Philosophy
   franchiseePhilosophy: {
-    headline: 'Fewer, Stronger, More Profitable',
-    principle: 'This isn\'t about shrinking Subway — it\'s about making every remaining store a thriving business for the franchisee who runs it.',
+    headline: 'Elevate Every Store',
+    principle: 'This isn\'t about shrinking Subway — it\'s about helping every store reach its full potential. Store count is an outcome, not a target.',
     transitionPaths: [
       {
         scenario: 'Good Operator, Weak Location',
@@ -82,36 +76,66 @@ const phaseData = {
       },
       {
         scenario: 'Operator Needs Development',
-        approach: 'Improvement program',
-        detail: 'Clear 12-month improvement plan with training, coaching, and operational support. Regular check-ins and measurable milestones. Goal is success, not exit.',
+        approach: 'Path to Tier 1 program',
+        detail: 'Clear 12-24 month improvement plan with training, coaching, and operational support. Regular check-ins and measurable milestones. Goal is Tier 1 status.',
       },
       {
-        scenario: 'Unwilling or Unable to Improve',
+        scenario: 'Store Needs Intensive Support',
+        approach: 'Tier 3 intervention',
+        detail: 'Root cause analysis (location, operations, or market). Dedicated support team. Relocate, restructure, or transfer — exit only as last resort.',
+      },
+      {
+        scenario: 'No Viable Path Forward',
         approach: 'Managed transition',
-        detail: 'Internal transfer system connects stores with qualified buyers. Dignified exit with fair valuation. No store left to struggle and damage the brand.',
-      },
-      {
-        scenario: 'No Viable Buyer',
-        approach: 'Corporate bridge',
-        detail: 'Subway Corporate takes temporary operational control until a qualified franchisee is found. Prevents store deterioration and protects customer experience.',
+        detail: 'Internal transfer system connects stores with qualified buyers. Dignified transition with fair valuation. Used only when all other options exhausted.',
       },
     ],
-    benefitStatement: 'When every store is stronger and more profitable, everyone wins: franchisees build real wealth, the franchisor has a sustainable royalty base, and the entire ecosystem (vendors, supply chain, landlords) operates on solid footing.',
+    benefitStatement: 'When every store is performing at Tier 1 level, everyone wins: franchisees build real wealth, the franchisor has a sustainable royalty base, and customers get consistently excellent experiences.',
   },
 }
 
 const kpiData = [
-  { label: 'Current Stores', value: '20,162', subtitle: 'Nov 2025', icon: '🏪', trend: 'down', change: '-21% since 2022' },
-  { label: 'Target Stores', value: '12-14k', subtitle: 'By 2035', icon: '🎯', trend: 'target' },
+  { label: 'Current Tier 1', value: '30%', subtitle: '~5,850 stores', icon: '🏪', trend: 'up', change: 'Target: 90%' },
+  { label: 'Current Tier 2', value: '45%', subtitle: '~8,775 stores', icon: '📈', trend: 'neutral', change: 'Target: 9.5%' },
   { label: 'Current AUV', value: '~$430k', subtitle: 'System average', icon: '💰', trend: 'neutral' },
   { label: 'Target AUV', value: '$750k+', subtitle: 'Min by 2030', icon: '🚀', trend: 'target', change: '+74% growth needed' },
 ]
 
 const tierData = [
-  { tier: 1, name: 'Flagship/Growth', description: 'Top AUV, compliant, priority access', color: colors.green, percent: 30 },
-  { tier: 2, name: 'Transitional', description: 'Clear improvement plan, time-bound', color: colors.yellow, percent: 45 },
-  { tier: 3, name: 'Exit/Consolidate', description: 'Managed closure or transfer', color: colors.red, percent: 25 },
+  { tier: 1, name: 'Performing', description: 'Top AUV, compliant, expansion priority', color: colors.green, percent: 90, target: '90%' },
+  { tier: 2, name: 'Improving', description: 'Clear path to Tier 1, active development plan', color: colors.yellow, percent: 9.5, target: '9.5%' },
+  { tier: 3, name: 'Critical', description: 'Intensive intervention, last resort exit only', color: colors.red, percent: 0.5, target: '0.5%' },
 ]
+
+// Tier Migration Tracking
+const tierMigrationData = {
+  goal: 'Optimize tier distribution to 90% Tier 1 / 9.5% Tier 2 / 0.5% Tier 3',
+  philosophy: 'The goal is not to reduce store count — it\'s to elevate store performance. Final store count is an outcome, not a target.',
+  currentDistribution: {
+    tier1: { percent: 30, stores: '~5,850' },
+    tier2: { percent: 45, stores: '~8,775' },
+    tier3: { percent: 25, stores: '~4,875' },
+  },
+  targetDistribution: {
+    tier1: { percent: 90, description: 'Performing at goal' },
+    tier2: { percent: 9.5, description: 'On clear improvement trajectory' },
+    tier3: { percent: 0.5, description: 'Preferably none — exit only when necessary' },
+  },
+  migrationMetrics: [
+    { metric: 'Tier 2 → Tier 1 Success Rate', current: 'TBD', target: '85%+', description: 'Percentage of Tier 2 stores that graduate to Tier 1 within 24 months' },
+    { metric: 'Tier 3 → Tier 2 Recovery Rate', current: 'TBD', target: '70%+', description: 'Percentage of Tier 3 stores that improve to Tier 2 within 12 months' },
+    { metric: 'Average Time to Tier 1', current: 'TBD', target: '18 months', description: 'Average time for a Tier 2 store to reach Tier 1 status' },
+    { metric: 'Tier 1 Retention Rate', current: 'TBD', target: '95%+', description: 'Percentage of Tier 1 stores that maintain status year-over-year' },
+  ],
+  pathToTier1: {
+    headline: 'Every Store Has a Path',
+    description: 'The focus shifts from "which stores to close" to "how do we help every store succeed." Exits are a last resort, not a strategy.',
+    interventions: [
+      { tier: 'Tier 2', focus: 'Structured improvement plan with coaching, training, and operational support. 12-24 month timeline with clear milestones.' },
+      { tier: 'Tier 3', focus: 'Intensive intervention — assess root cause (location, operations, or market). Relocate, restructure, or transfer before considering exit.' },
+    ],
+  },
+}
 
 const partnershipData = [
   {
@@ -242,10 +266,10 @@ const tieringDetailData = {
     deadline: '2030',
     current: '~$430,000',
     growth: '+74%',
-    rationale: 'Closing low-volume stores removes drag on the average. Remaining stores + operational improvements get you there.',
+    rationale: 'Elevating stores to Tier 1 status raises the network average. Operational improvements and focused support drive growth.',
   },
   auvMath: {
-    explanation: 'Store closures disproportionately remove low-AUV locations, naturally raising the network average.',
+    explanation: 'Moving stores from Tier 2/3 to Tier 1 through operational improvements raises the network average. Success-focused, not exit-focused.',
   },
   inflationAdjustment: {
     principle: 'The minimum AUV floor should adjust for inflation annually to maintain real purchasing power.',
@@ -258,24 +282,30 @@ const tieringDetailData = {
     mechanism: 'Annual review tied to CPI or QSR industry index. Published 18 months ahead so franchisees can plan.',
   },
   criteria: [
-    { tier: 1, auv: '$750k+', auvFuture: 'At goal', compliance: '95%+', growth: 'Expansion priority', support: 'Priority LTO access, reduced royalties, new store rights' },
-    { tier: 2, auv: '$500-750k', auvFuture: 'Path to goal', compliance: '80-95%', growth: 'Improvement plan', support: 'Coaching, milestone tracking, marketing support' },
-    { tier: 3, auv: '<$500k', auvFuture: 'Below floor', compliance: '<80%', growth: 'Exit/Transfer/Turnaround', support: 'Intensive intervention or managed exit' },
+    { tier: 1, auv: '$750k+', auvFuture: 'At goal', compliance: '95%+', growth: 'Expansion priority', support: 'Priority LTO access, reduced royalties, new store rights', targetPct: '90%' },
+    { tier: 2, auv: '$500-750k', auvFuture: 'Path to Tier 1', compliance: '80-95%', growth: 'Active improvement', support: 'Dedicated coaching, milestone tracking, marketing support', targetPct: '9.5%' },
+    { tier: 3, auv: '<$500k', auvFuture: 'Intensive support', compliance: '<80%', growth: 'Recovery program', support: 'Root cause analysis, relocation options, intensive intervention', targetPct: '0.5%' },
+  ],
+  pathToTier1: [
+    { intervention: 'Performance Coaching', description: 'Dedicated coach assigned for 12-24 months with clear milestones', timeline: 'Ongoing', successRate: '85% target' },
+    { intervention: 'Operations Assessment', description: 'Deep dive into labor, food costs, and efficiency opportunities', timeline: '30 days', successRate: 'Identifies 10-15% improvement opportunities' },
+    { intervention: 'Relocation Analysis', description: 'If location is the issue, identify better sites with priority access', timeline: '60-90 days', successRate: '70% of relocations reach Tier 1' },
+    { intervention: 'Marketing Support', description: 'Local marketing co-investment and guidance', timeline: '6-12 months', successRate: '15-20% sales lift typical' },
   ],
   exitStrategies: [
-    { strategy: 'Voluntary Exit', description: 'Up to $50k exit package for clean store closure', timeline: '90 days' },
-    { strategy: 'Store Transfer', description: 'Facilitated sale to Tier 1 operator or corporate spine', timeline: '6-12 months' },
-    { strategy: 'Non-Renewal', description: 'Lease not renewed at expiration, managed wind-down', timeline: 'At lease end' },
-    { strategy: 'Forced Exit', description: 'Compliance violations, last resort after remediation fails', timeline: '30-90 days' },
+    { strategy: 'Relocation', description: 'Move to a better site with transition support — preferred option for good operators', timeline: '6-12 months', priority: 1 },
+    { strategy: 'Store Transfer', description: 'Facilitated sale to Tier 1 operator who can turn it around', timeline: '6-12 months', priority: 2 },
+    { strategy: 'Voluntary Exit', description: 'Exit package for operators who choose to leave — dignified transition', timeline: '90 days', priority: 3 },
+    { strategy: 'Non-Renewal', description: 'Lease not renewed at expiration — only after all options exhausted', timeline: 'At lease end', priority: 4 },
   ],
   consolidationFund: {
     size: '$500M over 5 years',
     sources: ['Royalty allocation (0.5%)', 'Corporate contribution', 'Roark Capital support'],
     uses: [
-      { use: 'Exit Packages', amount: '$50k/store', total: '~$150M' },
+      { use: 'Path to Tier 1 Programs', amount: 'Per store', total: '~$150M' },
       { use: 'Remodel Co-Fund', amount: 'Up to 50%', total: '~$200M' },
       { use: 'Relocation Capex', amount: 'Up to $250k', total: '~$100M' },
-      { use: 'Operator Training', amount: 'Programs', total: '~$50M' },
+      { use: 'Operator Training & Coaching', amount: 'Programs', total: '~$50M' },
     ],
   },
 }
@@ -308,9 +338,10 @@ const kpiCatalogData = [
   {
     category: 'Network Health',
     metrics: [
-      { name: 'Tier 1 Distribution', definition: 'Percentage of stores in Tier 1', formula: 'Tier 1 Stores / Total Stores', target: '40%+', frequency: 'Quarterly' },
+      { name: 'Tier 1 Distribution', definition: 'Percentage of stores in Tier 1 (Performing)', formula: 'Tier 1 Stores / Total Stores', target: '90%', frequency: 'Quarterly' },
+      { name: 'Tier 2→1 Migration Rate', definition: 'Tier 2 stores graduating to Tier 1', formula: 'Tier 2 Graduates / Total Tier 2', target: '85%+ within 24mo', frequency: 'Quarterly' },
+      { name: 'Tier 1 Retention Rate', definition: 'Tier 1 stores maintaining status', formula: 'Retained Tier 1 / Prior Tier 1', target: '95%+', frequency: 'Quarterly' },
       { name: 'Compliance Rate', definition: 'Stores meeting all standards', formula: 'Compliant Stores / Total Stores', target: '95%+', frequency: 'Monthly' },
-      { name: 'Closure Rate', definition: 'Net store closures', formula: 'Closures - Openings', target: 'Per plan', frequency: 'Monthly' },
     ],
   },
 ]
@@ -347,7 +378,7 @@ const learningDevData = {
   existingAssets: [
     { asset: 'WhatsApp Coalition', status: '~60 franchisees, 1,000-1,500 stores', opportunity: 'Pilot group for new learning initiatives. Ask them what they need.' },
     { asset: 'NAASF', status: 'Established national association', opportunity: 'Partner on industry learning content. Leverage their credibility.' },
-    { asset: 'Tier 1 Operators', status: '~30% of network', opportunity: 'The teachers. Make it easy and rewarding for them to share.' },
+    { asset: 'Tier 1 Operators', status: 'Target: 90% of network', opportunity: 'The teachers. Make it easy and rewarding for them to share and mentor.' },
   ],
   feedbackLoop: 'Learning isn\'t one-way. The best insights come FROM franchisees, get validated, then shared back. Corporate curates, franchisees create.',
 }
@@ -355,10 +386,10 @@ const learningDevData = {
 const newDevelopmentData = {
   philosophy: 'New stores only when economics work for franchisees. Growth serves operators, not just corporate royalty revenue.',
   overdevelopmentLesson: {
-    headline: 'From Overdevelopment to Focused Growth',
-    stats: '25,000+ stores at peak → 19,000 today → 11-13k target by 2035',
-    lesson: 'Subway prioritized unit count over unit economics for decades. Franchisees carried the cost of cannibalization, weak sites, and margin pressure. That era is over.',
-    newApproach: 'Development must now be surgical: right location, right operator, right economics. Fewer stores, but every one profitable and sustainable.',
+    headline: 'From Unit Count to Unit Excellence',
+    stats: '25,000+ stores at peak → 19,500 today → 90% Tier 1 target',
+    lesson: 'Subway prioritized unit count over unit economics for decades. The new focus: help every store reach Tier 1 performance. Store count is an outcome, not a target.',
+    newApproach: 'Development now serves the existing network. Priority is elevating current stores, not adding new ones. When we do add stores, only where economics clearly support success.',
   },
   currentProblem: 'Historically, new stores were approved to hit unit count targets, often cannibalizing existing franchisees. Growth was celebrated even when individual stores struggled.',
   principles: [
@@ -387,7 +418,7 @@ const newDevelopmentData = {
   },
   restrictions: [
     'No new stores in trade areas with >15% cannibalization risk',
-    'No new franchisees until network stabilizes at target range (12-14k)',
+    'No new franchisees until Tier 1 distribution reaches 70%+',
     'No development deals that lock in unit counts without site approval',
     'Corporate cannot mandate development as condition of renewal',
   ],
@@ -849,8 +880,8 @@ const transparencyNarrativeData = {
     {
       title: 'Why This Works',
       points: [
-        'Good stores shine — Top performers finally get recognized',
-        'Bad stores face pressure — Customer visibility forces improvement or exit',
+        'Good stores shine — Top performers (Tier 1) finally get recognized',
+        'Improving stores get support — Visibility drives resources to where they\'re needed',
         'Customers become partners — They help identify what\'s working',
         'Competitors can\'t follow — They\'d expose their own inconsistencies',
       ],
@@ -858,46 +889,49 @@ const transparencyNarrativeData = {
     {
       title: 'The Strategic Backbone',
       risks: [
-        { risk: 'Bad stores exposed', solution: 'Portfolio management — close/fix/transfer them' },
+        { risk: 'Struggling stores exposed', solution: 'Path to Tier 1 programs — intensive support to improve' },
         { risk: 'Inconsistent quality', solution: 'Food OS + Tech OS — standardize operations' },
-        { risk: 'Weak operators visible', solution: 'Tiering system — Tier 3 exits, Tier 1 rewarded' },
-        { risk: '"What if we look bad?"', solution: 'Right-size to 11-13k elite stores first' },
+        { risk: 'Operators need help visible', solution: 'Tiering system — Tier 2/3 get resources, Tier 1 get rewards' },
+        { risk: '"What if we look bad?"', solution: 'Achieve 90% Tier 1 distribution first' },
       ],
     },
   ],
   callout: 'The strategy exists to make transparency survivable — and powerful.',
-  subwayAdvantage: 'Subway\'s biggest weakness (inconsistency across 20k stores) becomes its biggest differentiator. By exposing performance publicly, good stores get recognized and bad stores face pressure to improve.',
+  subwayAdvantage: 'Subway\'s biggest opportunity: help every store reach Tier 1 status. By tracking and supporting improvement publicly, good stores get recognized and struggling stores get the help they need.',
 }
 
 const implementationRoadmapData = [
   {
     phase: 1,
-    name: 'Foundation',
+    name: 'Foundation & Assessment',
     years: '0-3',
+    tierTarget: '50% Tier 1',
     quarters: [
-      { q: 'Q1-Q2 Y1', focus: 'Infrastructure', actions: ['Deploy tiering system', 'Launch franchisee dashboard MVP', 'Establish consolidation fund'] },
-      { q: 'Q3-Q4 Y1', focus: 'First Wave', actions: ['Begin Tier 3 exit conversations', 'Pilot Food OS 1.0 in 50 stores', 'Launch Test Kitchen in select markets'] },
-      { q: 'Y2', focus: 'Acceleration', actions: ['1,500-2,000 closures', 'Expand Food OS to 500+ stores', 'Corporate spine: 5 markets'] },
-      { q: 'Y3', focus: 'Stabilization', actions: ['Reach ~17,500 stores', 'Tech OS integration complete', 'Full transparency rollout'] },
+      { q: 'Q1-Q2 Y1', focus: 'Infrastructure', actions: ['Deploy tiering system', 'Launch Path to Tier 1 programs', 'Establish support fund'] },
+      { q: 'Q3-Q4 Y1', focus: 'First Wave', actions: ['Begin intensive Tier 3 interventions', 'Pilot Food OS 1.0 in 50 stores', 'Launch mentorship matching'] },
+      { q: 'Y2', focus: 'Acceleration', actions: ['Scale successful interventions', 'Expand Food OS to 500+ stores', 'Track Tier 2→1 migrations'] },
+      { q: 'Y3', focus: 'Stabilization', actions: ['Achieve 50% Tier 1', 'Tech OS integration complete', 'Migration tracking dashboard live'] },
     ],
   },
   {
     phase: 2,
-    name: 'Strategic Cleanup',
+    name: 'Acceleration',
     years: '3-6',
+    tierTarget: '70% Tier 1',
     quarters: [
-      { q: 'Y4', focus: 'Trade Area Surgery', actions: ['Resolve 80% of cannibalization', 'Operator consolidation program', 'Remodel wave 2'] },
-      { q: 'Y5', focus: 'Operator Excellence', actions: ['Tier 1 skew to 35%', 'Multi-unit operator expansion', 'AI-powered recommendations'] },
-      { q: 'Y6', focus: 'Network Optimization', actions: ['Reach ~14,000 stores', 'Food OS 2.0 national', 'Full loyalty reimagination'] },
+      { q: 'Y4', focus: 'Scale What Works', actions: ['Resolve 80% of cannibalization', 'Expand proven intervention programs', 'Remodel wave 2'] },
+      { q: 'Y5', focus: 'Operator Excellence', actions: ['Achieve 60% Tier 1', 'Multi-unit operator expansion', 'AI-powered coaching recommendations'] },
+      { q: 'Y6', focus: 'Network Optimization', actions: ['Achieve 70% Tier 1', 'Food OS 2.0 national', 'Full loyalty reimagination'] },
     ],
   },
   {
     phase: 3,
-    name: 'Precision & Lock-In',
+    name: 'Excellence & Lock-In',
     years: '6-10',
+    tierTarget: '90% Tier 1',
     quarters: [
-      { q: 'Y7-8', focus: 'Precision Pruning', actions: ['Non-renew marginal leases', 'Selective A+ openings only', '100% compliant network'] },
-      { q: 'Y9-10', focus: 'Institutionalization', actions: ['Reach 11-13k elite stores', 'Food OS 3.0 with AI', '5%+ corporate spine', 'Model fully institutionalized'] },
+      { q: 'Y7-8', focus: 'Final Push', actions: ['Achieve 80% Tier 1', 'Selective A+ openings only', '100% compliant network'] },
+      { q: 'Y9-10', focus: 'Institutionalization', actions: ['Achieve 90% Tier 1 target', 'Food OS 3.0 with AI', '5%+ corporate spine', 'Model fully institutionalized'] },
     ],
   },
 ]
@@ -906,8 +940,8 @@ const presentationSlides = [
   {
     id: 1,
     title: 'The Subway Transformation',
-    subtitle: '11-13k Elite Units in 10 Years',
-    content: 'A strategic reset from 19,000 inconsistent stores to a right-sized network of profitable, modern, community-connected locations.',
+    subtitle: '90% Tier 1 in 10 Years',
+    content: 'A strategic reset focused on elevating every store to Tier 1 (Performing) status. Store count is an outcome, not a target.',
     type: 'title',
   },
   {
@@ -923,10 +957,10 @@ const presentationSlides = [
     title: 'Why Transparency Requires Strategy',
     subtitle: 'You cannot promise transparency without the spine to survive it',
     bullets: [
-      'Bad stores exposed → Portfolio management (close/fix them)',
+      'Struggling stores visible → Path to Tier 1 programs (support them)',
       'Inconsistent quality → Food OS + Tech OS standardization',
-      'Weak operators visible → Tiering system with real exits',
-      '"What if we look bad?" → Right-size to elite stores first',
+      'Operators need help → Tiering system with intensive support',
+      '"What if we look bad?" → Achieve 90% Tier 1 distribution first',
     ],
     type: 'bullets',
   },
@@ -1002,7 +1036,7 @@ const presentationSlides = [
     title: 'The Path Forward',
     subtitle: 'What Success Looks Like',
     bullets: [
-      '11-13k stores that are profitable, modern, and community-connected',
+      '90% Tier 1 stores that are profitable, modern, and community-connected',
       'Customers as partners, not just buyers',
       'Franchisees with voice and shared success',
       'Technology that enables transparency and action',
@@ -2837,7 +2871,10 @@ function PhaseCard({ phase }) {
 function TierSection() {
   return (
     <div style={styles.tierContainer}>
-      <h3 style={{ ...styles.sectionTitle, color: colors.text, marginTop: 0 }}>Portfolio Tiering</h3>
+      <h3 style={{ ...styles.sectionTitle, color: colors.text, marginTop: 0 }}>Target Tier Distribution</h3>
+      <div style={{ fontSize: '13px', color: colors.textLight, marginBottom: '16px', fontStyle: 'italic' }}>
+        {tierMigrationData.philosophy}
+      </div>
       {tierData.map((tier) => (
         <div key={tier.tier} style={styles.tierRow}>
           <div style={styles.tierBadge(tier.color)}>{tier.tier}</div>
@@ -2845,7 +2882,10 @@ function TierSection() {
             <div style={styles.tierName}>{tier.name}</div>
             <div style={styles.tierDesc}>{tier.description}</div>
           </div>
-          <div style={styles.tierPercent}>{tier.percent}%</div>
+          <div style={{ ...styles.tierPercent, display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+            <span style={{ fontWeight: '700' }}>{tier.target}</span>
+            <span style={{ fontSize: '11px', color: colors.textLight }}>target</span>
+          </div>
         </div>
       ))}
     </div>
@@ -3618,7 +3658,7 @@ function DeepDive() {
               </div>
             </div>
 
-            {/* The Math of Closures */}
+            {/* The Math of Tier Migration */}
             <div style={{
               backgroundColor: colors.gray,
               borderRadius: '12px',
@@ -3626,7 +3666,7 @@ function DeepDive() {
               marginBottom: '32px',
               borderLeft: `4px solid ${colors.green}`
             }}>
-              <h4 style={{ color: colors.text, marginBottom: '12px', fontSize: '16px' }}>Why Closures Raise AUV</h4>
+              <h4 style={{ color: colors.text, marginBottom: '12px', fontSize: '16px' }}>How Tier Migration Raises AUV</h4>
               <p style={{ color: colors.textLight, marginBottom: '12px', lineHeight: '1.6' }}>
                 {tieringDetailData.auvMath.explanation}
               </p>
@@ -3701,7 +3741,31 @@ function DeepDive() {
               </table>
             </div>
 
-            <h4 style={{ color: colors.text, marginTop: '32px', marginBottom: '16px' }}>Exit Strategies</h4>
+            <h4 style={{ color: colors.text, marginTop: '32px', marginBottom: '16px' }}>Path to Tier 1 Interventions</h4>
+            <div style={styles.tableContainer}>
+              <table style={styles.table}>
+                <thead>
+                  <tr>
+                    <th style={styles.tableHeader}>Intervention</th>
+                    <th style={styles.tableHeader}>Description</th>
+                    <th style={styles.tableHeader}>Timeline</th>
+                    <th style={styles.tableHeader}>Success Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tieringDetailData.pathToTier1.map((row, i) => (
+                    <tr key={i}>
+                      <td style={styles.tableCellBold}>{row.intervention}</td>
+                      <td style={styles.tableCell}>{row.description}</td>
+                      <td style={styles.tableCell}>{row.timeline}</td>
+                      <td style={{ ...styles.tableCell, color: colors.green }}>{row.successRate}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <h4 style={{ color: colors.text, marginTop: '32px', marginBottom: '16px' }}>Transition Options (Last Resort)</h4>
             <div style={styles.tableContainer}>
               <table style={styles.table}>
                 <thead>
